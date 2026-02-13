@@ -1,0 +1,101 @@
+import sqlite3
+from pathlib import Path
+from datetime import datetime
+from ui.db import DB_PATH
+
+
+
+def inicializar_db():
+    DB_PATH.parent.mkdir(exist_ok=True)
+
+    conn = sqlite3.connect(DB_PATH)
+    cur = conn.cursor()
+
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS historico (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            arquivo TEXT,
+            registros INTEGER,
+            tempo REAL,
+            status TEXT,
+            data TEXT
+        )
+    """)
+
+    conn.commit()
+    conn.close()
+
+
+def registrar_execucao(
+    arquivo,
+    registros=0,
+    tempo=0.0,
+    status="OK"
+):
+    conn = sqlite3.connect(DB_PATH)
+    cur = conn.cursor()
+
+    cur.execute("""
+        INSERT INTO historico (
+            arquivo, registros, tempo, status, data
+        ) VALUES (?, ?, ?, ?, ?)
+    """, (
+        str(arquivo),
+        registros,
+        round(tempo, 2),
+        status,
+        datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    ))
+
+    conn.commit()
+    conn.close()
+
+
+def listar_execucoes():
+    conn = sqlite3.connect(DB_PATH)
+    cur = conn.cursor()
+
+    cur.execute("""
+        SELECT arquivo, registros, tempo, status, data
+        FROM historico
+        ORDER BY id DESC
+    """)
+
+    rows = cur.fetchall()
+    conn.close()
+
+    return rows
+
+def limpar_execucoes():
+    import sqlite3
+    conn = sqlite3.connect("data/historico.db")
+    cur = conn.cursor()
+    cur.execute("DELETE FROM historico_execucoes")
+    conn.commit()
+    conn.close()
+
+def garantir_coluna(cur, nome, tipo):
+    cur.execute("PRAGMA table_info(deslocamentos)")
+    colunas = [c[1] for c in cur.fetchall()]
+    if nome not in colunas:
+        cur.execute(f"ALTER TABLE deslocamentos ADD COLUMN {nome} {tipo}")
+        garantir_coluna(cur, "origem_arquivo", "TEXT")
+        garantir_coluna(cur, "criado_em", "TEXT")
+        garantir_coluna(cur, "hash_registro", "TEXT")
+
+def listar_execucoes_por_arquivo(nome_arquivo: str):
+    conn = sqlite3.connect(DB_PATH)
+    cur = conn.cursor()
+
+    cur.execute("""
+        SELECT arquivo, registros, tempo, status, data
+        FROM execucoes
+        WHERE arquivo LIKE ?
+        ORDER BY data DESC
+    """, (f"%{nome_arquivo}%",))
+
+    rows = cur.fetchall()
+    conn.close()
+    return rows
+
+

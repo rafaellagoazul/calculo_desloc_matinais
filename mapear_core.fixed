@@ -1,0 +1,46 @@
+# REMOVIDO: from pathlib import Path
+# REMOVIDO: import re
+
+ROOT = Path(__file__).resolve().parent
+CORE_DIR = ROOT / "core"
+
+print("\n🧠 MAPEAMENTO DO CORE (SOMENTE LEITURA)")
+print("📂 Pasta:", CORE_DIR)
+
+if not CORE_DIR.exists():
+    print("❌ Pasta core/ não encontrada")
+    raise SystemExit(1)
+
+py_files = sorted(CORE_DIR.rglob("*.py"))
+
+print(f"\n📄 Arquivos encontrados ({len(py_files)}):")
+for f in py_files:
+    print(" •", f.relative_to(ROOT))
+
+IMPORT_RE = re.compile(
+    r'^(?:from\s+([\w\.]+)\s+import|import\s+([\w\.]+))',
+    re.MULTILINE
+)
+
+print("\n🔗 Imports detectados:\n")
+
+for file in py_files:
+    try:
+        content = file.read_text(encoding="utf-8")
+    except Exception as e:
+        print(f"⚠️ Erro ao ler {file.name}: {e}")
+        continue
+
+    matches = IMPORT_RE.findall(content)
+    imports = sorted(
+        {m[0] or m[1] for m in matches if m[0] or m[1]}
+    )
+
+    if imports:
+        print(f"📄 {file.relative_to(ROOT)}")
+        for imp in imports:
+            if imp.startswith(("core", "ui", "data")):
+                print(f"   ↳ {imp}")
+        print()
+
+print("✅ Mapeamento concluído (nenhuma modificação realizada)\n")

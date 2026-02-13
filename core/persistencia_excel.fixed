@@ -1,0 +1,64 @@
+
+# REMOVIDO: import pandas as pd
+
+
+# REMOVIDO: from pathlib import Path
+# REMOVIDO: from typing import List
+# REMOVIDO: from typing import Dict
+def aplicar_correcoes_excel(
+    caminho_excel: Path,
+    correcoes: List[Dict],
+    salvar_como: Path | None = None
+) -> Path:
+    """
+    Aplica correções de coordenadas no Excel.
+
+    correcoes = [
+        {
+            "linha": 2,                # linha real do Excel
+            "campo": "CASA VEND",      # nome da coluna
+            "lat": -23.55,
+            "lon": -46.63
+        }
+    ]
+    """
+
+    if not correcoes:
+        return salvar_como or caminho_excel
+
+    df = pd.read_excel(caminho_excel)
+
+    total_linhas = len(df)
+
+    for item in correcoes:
+        linha_excel = item.get("linha")
+        campo = item.get("campo")
+        lat = item.get("lat")
+        lon = item.get("lon")
+
+        # ─── Validações defensivas ─────────────────────────
+        if not linha_excel or not campo:
+            continue
+
+        if lat is None or lon is None:
+            continue
+
+        linha_df = linha_excel - 2  # Excel começa em 1 / pandas em 0
+
+        if linha_df < 0 or linha_df >= total_linhas:
+            raise IndexError(
+                f"Linha {linha_excel} fora do intervalo do Excel"
+            )
+
+        if campo not in df.columns:
+            raise KeyError(
+                f"Coluna '{campo}' não encontrada no Excel"
+            )
+
+        # ─── Aplica correção ───────────────────────────────
+        df.at[linha_df, campo] = f"{float(lat)},{float(lon)}"
+
+    destino = salvar_como or caminho_excel
+    df.to_excel(destino, index=False)
+
+    return destino

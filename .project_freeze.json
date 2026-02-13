@@ -1,0 +1,19 @@
+{
+  ".cache_ors\\00b4fd22b91c51cbcdf09c3e3b70a674.json": false,
+  "ui\\deslocamentos_queries.py": true,
+  "ui\\windows\\history_window.py": true,
+  "tools__old\\tools\\backup\\__init__.py": false,
+  ".backups_full_project\\backup_20260204_105837\\application\\services\\calculo_service.py": false,
+  "core\\calculador.py": true,
+  "core\\utils.py": true,
+  "core\\coord_validator.py": true,
+  "core\\persistencia_excel.py": true,
+  "core\\snapping.py": true,
+  "core\\preprocessador_coordenadas.py": true,
+  "core\\db.py": true,
+  "main.py": true,
+  "tools\\tools_hub.py": true,
+  "tools\\hub_lock.py": true,
+  "run_tools.py": true,
+  "mapear_core.py": true
+}

@@ -1,0 +1,197 @@
+# ui/deslocamentos_queries.py
+import sqlite3
+from pathlib import Path
+
+DB_PATH = Path("data/deslocamentos.db")
+
+
+# ─────────────────────────────────────────────
+# CONEXÃO
+# ─────────────────────────────────────────────
+def _conectar():
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+
+# ─────────────────────────────────────────────
+# CONSOLIDAÇÃO GERAL
+# ─────────────────────────────────────────────
+def resumo_geral(periodo=None):
+    conn = _conectar()
+    cur = conn.cursor()
+
+    sql = """
+        SELECT
+            COUNT(*) AS total_registros,
+            ROUND(SUM(dist_casa_cli), 2) AS total_casa_cli,
+            ROUND(SUM(dist_casa_dist_cli), 2) AS total_casa_dist_cli,
+            ROUND(SUM(diferenca), 2) AS total_economizado
+        FROM deslocamentos
+        WHERE dia != 'Ciclo'
+    """
+    params = []
+
+    if periodo:
+        sql += " AND strftime('%Y-%m', data_importacao) = ?"
+        params.append(periodo)
+
+    cur.execute(sql, params)
+    row = cur.fetchone()
+    conn.close()
+
+    return dict(row) if row else {}
+
+
+# ─────────────────────────────────────────────
+# CONSOLIDAÇÃO POR VENDEDOR (USADO NO HISTÓRICO)
+# ─────────────────────────────────────────────
+def resumo_por_vendedor(periodo=None, arquivo=None, vendedor=None):
+    conn = _conectar()
+    cur = conn.cursor()
+
+    sql = """
+        SELECT
+            cod_vendedor,
+            COUNT(*) AS total,
+            ROUND(SUM(diferenca), 2) AS economia
+        FROM deslocamentos
+        WHERE 1=1
+    """
+    params = []
+
+    if periodo:
+        sql += " AND strftime('%Y-%m', data_importacao) = ?"
+        params.append(periodo)
+
+    if arquivo:
+        sql += " AND origem_arquivo = ?"
+        params.append(arquivo)
+
+    if vendedor:
+        sql += " AND cod_vendedor = ?"
+        params.append(vendedor)
+
+    sql += " GROUP BY cod_vendedor ORDER BY cod_vendedor"
+
+    cur.execute(sql, params)
+    rows = cur.fetchall()
+    conn.close()
+
+    return [(r["cod_vendedor"], r["total"], r["economia"]) for r in rows]
+
+
+# ─────────────────────────────────────────────
+# CONSOLIDAÇÃO POR PERÍODO (OPCIONAL)
+# ─────────────────────────────────────────────
+def resumo_por_periodo(periodo):
+    conn = _conectar()
+    cur = conn.cursor()
+
+    cur.execute("""
+        SELECT
+            cod_vendedor,
+            COUNT(*) AS total,
+            ROUND(SUM(diferenca), 2) AS economia
+        FROM deslocamentos
+        WHERE strftime('%Y-%m', data_importacao) = ?
+        GROUP BY cod_vendedor
+        ORDER BY economia DESC
+    """, (periodo,))
+
+    rows = cur.fetchall()
+    conn.close()
+    return rows
+
+
+# ─────────────────────────────────────────────
+# LISTAS PARA FILTROS DA UI
+# ─────────────────────────────────────────────
+def listar_periodos():
+    conn = _conectar()
+    cur = conn.cursor()
+
+    cur.execute("""
+        SELECT DISTINCT strftime('%Y-%m', data_importacao) AS periodo
+        FROM deslocamentos
+        ORDER BY periodo DESC
+    """)
+
+    rows = [r[0] for r in cur.fetchall()]
+    conn.close()
+    return rows
+
+
+def listar_arquivos():
+    conn = _conectar()
+    cur = conn.cursor()
+
+    cur.execute("""
+        SELECT DISTINCT origem_arquivo
+        FROM deslocamentos
+        ORDER BY origem_arquivo
+    """)
+
+    rows = [r[0] for r in cur.fetchall()]
+    conn.close()
+    return rows
+
+
+def listar_vendedores():
+    conn = _conectar()
+    cur = conn.cursor()
+
+    cur.execute("""
+        SELECT DISTINCT cod_vendedor
+        FROM deslocamentos
+        ORDER BY cod_vendedor
+    """)
+
+    rows = [r[0] for r in cur.fetchall()]
+    conn.close()
+    return rows
+
+
+# ─────────────────────────────────────────────
+# EXPORTAÇÃO DE DADOS
+# ─────────────────────────────────────────────
+def exportar_dados(periodo=None, arquivo=None, vendedor=None):
+    conn = _conectar()
+    cur = conn.cursor()
+
+    sql = """
+        SELECT
+            sv,
+            dia,
+            cod_vendedor,
+            cod_cliente,
+            casa_vend,
+            distribuidor,
+            primeiro_cliente,
+            dist_casa_dist_cli,
+            dist_casa_cli,
+            diferenca
+        FROM deslocamentos
+        WHERE 1=1
+    """
+
+    params = []
+
+    if periodo:
+        sql += " AND strftime('%Y-%m', data_importacao) = ?"
+        params.append(periodo)
+
+    if arquivo:
+        sql += " AND origem_arquivo = ?"
+        params.append(arquivo)
+
+    if vendedor:
+        sql += " AND cod_vendedor = ?"
+        params.append(vendedor)
+
+    sql += " ORDER BY data_importacao DESC"
+
+    cur.execute(sql, params)
+    rows = cur.fetchall()
+    conn.close()
+    return rows

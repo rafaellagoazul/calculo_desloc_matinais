@@ -1,0 +1,1762 @@
+﻿ANALISE DO PROJETO
+Data: 01/22/2026 15:05:51
+Raiz: E:\Projetos\calculo_desloc_matinais
+===================================
+
+ESTRUTURA DE PASTAS
+.\ui
+.\core
+.\tests
+.\resources
+.\zz arquivos para testes
+.\logs
+.\data
+.\.cache_ors
+.\scripts
+.\legacy
+.\application
+.\dashboards
+.\_backup
+.\_quarantine
+.\admin
+.\.logs
+.\.backups
+.\.quarantine
+.\backups
+.\quarentena
+.\ui\controllers
+.\ui\windows
+.\ui\componentes
+.\ui\stores
+.\ui\layout
+.\ui\states
+.\ui\services
+.\ui\adapters
+.\tests\unit
+.\tests\integration
+.\tests\helpers
+.\tests\unit\core
+.\tests\unit\calculo
+.\legacy\20260120_151252
+.\legacy\20260120_151252\tools
+.\legacy\20260120_151252\application
+.\legacy\20260120_151252\tools\legacy_backup
+.\legacy\20260120_151252\tools\change_engine
+.\legacy\20260120_151252\tools\plans
+.\legacy\20260120_151252\tools\analyzers
+.\legacy\20260120_151252\tools\maintenance
+.\legacy\20260120_151252\tools\dashboard
+.\legacy\20260120_151252\tools\engine
+.\legacy\20260120_151252\tools\dashboards
+.\legacy\20260120_151252\tools\impl
+.\legacy\20260120_151252\tools\legacy_backup\patches
+.\legacy\20260120_151252\tools\legacy_backup\analysis
+.\application\services
+.\_backup\backup_20260120_163057
+.\_backup\backup_20260120_163822
+.\_backup\backup_20260120_163057\ui
+.\_backup\backup_20260120_163057\core
+.\_backup\backup_20260120_163057\tests
+.\_backup\backup_20260120_163057\resources
+.\_backup\backup_20260120_163057\zz arquivos para testes
+.\_backup\backup_20260120_163057\logs
+.\_backup\backup_20260120_163057\data
+.\_backup\backup_20260120_163057\.cache_ors
+.\_backup\backup_20260120_163057\scripts
+.\_backup\backup_20260120_163057\legacy
+.\_backup\backup_20260120_163057\application
+.\_backup\backup_20260120_163057\dashboards
+.\_backup\backup_20260120_163057\_quarantine
+.\_backup\backup_20260120_163057\admin
+.\_backup\backup_20260120_163057\.logs
+.\_backup\backup_20260120_163057\.backups
+.\_backup\backup_20260120_163057\.quarantine
+.\_backup\backup_20260120_163057\backups
+.\_backup\backup_20260120_163057\ui\controllers
+.\_backup\backup_20260120_163057\ui\windows
+.\_backup\backup_20260120_163057\ui\componentes
+.\_backup\backup_20260120_163057\ui\stores
+.\_backup\backup_20260120_163057\ui\layout
+.\_backup\backup_20260120_163057\ui\states
+.\_backup\backup_20260120_163057\ui\services
+.\_backup\backup_20260120_163057\ui\adapters
+.\_backup\backup_20260120_163057\tests\unit
+.\_backup\backup_20260120_163057\tests\integration
+.\_backup\backup_20260120_163057\tests\helpers
+.\_backup\backup_20260120_163057\tests\unit\core
+.\_backup\backup_20260120_163057\tests\unit\calculo
+.\_backup\backup_20260120_163057\legacy\20260120_151252
+.\_backup\backup_20260120_163057\legacy\20260120_151252\tools
+.\_backup\backup_20260120_163057\legacy\20260120_151252\application
+.\_backup\backup_20260120_163057\legacy\20260120_151252\tools\legacy_backup
+.\_backup\backup_20260120_163057\legacy\20260120_151252\tools\change_engine
+.\_backup\backup_20260120_163057\legacy\20260120_151252\tools\plans
+.\_backup\backup_20260120_163057\legacy\20260120_151252\tools\analyzers
+.\_backup\backup_20260120_163057\legacy\20260120_151252\tools\maintenance
+.\_backup\backup_20260120_163057\legacy\20260120_151252\tools\dashboard
+.\_backup\backup_20260120_163057\legacy\20260120_151252\tools\engine
+.\_backup\backup_20260120_163057\legacy\20260120_151252\tools\dashboards
+.\_backup\backup_20260120_163057\legacy\20260120_151252\tools\impl
+.\_backup\backup_20260120_163057\legacy\20260120_151252\tools\legacy_backup\patches
+.\_backup\backup_20260120_163057\legacy\20260120_151252\tools\legacy_backup\analysis
+.\_backup\backup_20260120_163057\application\services
+.\_backup\backup_20260120_163057\_quarantine\auto_20260120_152602
+.\_backup\backup_20260120_163057\_quarantine\auto_20260120_152602\tools
+.\_backup\backup_20260120_163057\admin\tools
+.\_backup\backup_20260120_163057\admin\core
+.\_backup\backup_20260120_163057\.quarantine\ui
+.\_backup\backup_20260120_163057\.quarantine\core
+.\_backup\backup_20260120_163057\.quarantine\tests
+.\_backup\backup_20260120_163057\.quarantine\scripts
+.\_backup\backup_20260120_163057\.quarantine\_quarantine
+.\_backup\backup_20260120_163057\.quarantine\legacy
+.\_backup\backup_20260120_163057\.quarantine\ui\controllers
+.\_backup\backup_20260120_163057\.quarantine\ui\windows
+.\_backup\backup_20260120_163057\.quarantine\ui\componentes
+.\_backup\backup_20260120_163057\.quarantine\ui\states
+.\_backup\backup_20260120_163057\.quarantine\ui\adapters
+.\_backup\backup_20260120_163057\.quarantine\tests\integration
+.\_backup\backup_20260120_163057\.quarantine\tests\helpers
+.\_backup\backup_20260120_163057\.quarantine\tests\unit
+.\_backup\backup_20260120_163057\.quarantine\tests\unit\core
+.\_backup\backup_20260120_163057\.quarantine\tests\unit\calculo
+.\_backup\backup_20260120_163057\.quarantine\_quarantine\auto_20260120_152602
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\application
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\legacy_backup
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\change_engine
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\plans
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\analyzers
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\maintenance
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\dashboard
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\engine
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\dashboards
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\impl
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\legacy_backup\patches
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\legacy_backup\analysis
+.\_backup\backup_20260120_163822\ui
+.\_backup\backup_20260120_163822\core
+.\_backup\backup_20260120_163822\tests
+.\_backup\backup_20260120_163822\resources
+.\_backup\backup_20260120_163822\zz arquivos para testes
+.\_backup\backup_20260120_163822\logs
+.\_backup\backup_20260120_163822\data
+.\_backup\backup_20260120_163822\.cache_ors
+.\_backup\backup_20260120_163822\scripts
+.\_backup\backup_20260120_163822\legacy
+.\_backup\backup_20260120_163822\application
+.\_backup\backup_20260120_163822\dashboards
+.\_backup\backup_20260120_163822\_quarantine
+.\_backup\backup_20260120_163822\admin
+.\_backup\backup_20260120_163822\.logs
+.\_backup\backup_20260120_163822\.backups
+.\_backup\backup_20260120_163822\.quarantine
+.\_backup\backup_20260120_163822\backups
+.\_backup\backup_20260120_163822\ui\controllers
+.\_backup\backup_20260120_163822\ui\windows
+.\_backup\backup_20260120_163822\ui\componentes
+.\_backup\backup_20260120_163822\ui\stores
+.\_backup\backup_20260120_163822\ui\layout
+.\_backup\backup_20260120_163822\ui\states
+.\_backup\backup_20260120_163822\ui\services
+.\_backup\backup_20260120_163822\ui\adapters
+.\_backup\backup_20260120_163822\tests\unit
+.\_backup\backup_20260120_163822\tests\integration
+.\_backup\backup_20260120_163822\tests\helpers
+.\_backup\backup_20260120_163822\tests\unit\core
+.\_backup\backup_20260120_163822\tests\unit\calculo
+.\_backup\backup_20260120_163822\legacy\20260120_151252
+.\_backup\backup_20260120_163822\legacy\20260120_151252\tools
+.\_backup\backup_20260120_163822\legacy\20260120_151252\application
+.\_backup\backup_20260120_163822\legacy\20260120_151252\tools\legacy_backup
+.\_backup\backup_20260120_163822\legacy\20260120_151252\tools\change_engine
+.\_backup\backup_20260120_163822\legacy\20260120_151252\tools\plans
+.\_backup\backup_20260120_163822\legacy\20260120_151252\tools\analyzers
+.\_backup\backup_20260120_163822\legacy\20260120_151252\tools\maintenance
+.\_backup\backup_20260120_163822\legacy\20260120_151252\tools\dashboard
+.\_backup\backup_20260120_163822\legacy\20260120_151252\tools\engine
+.\_backup\backup_20260120_163822\legacy\20260120_151252\tools\dashboards
+.\_backup\backup_20260120_163822\legacy\20260120_151252\tools\impl
+.\_backup\backup_20260120_163822\legacy\20260120_151252\tools\legacy_backup\patches
+.\_backup\backup_20260120_163822\legacy\20260120_151252\tools\legacy_backup\analysis
+.\_backup\backup_20260120_163822\application\services
+.\_backup\backup_20260120_163822\_quarantine\auto_20260120_152602
+.\_backup\backup_20260120_163822\_quarantine\auto_20260120_152602\tools
+.\_backup\backup_20260120_163822\admin\tools
+.\_backup\backup_20260120_163822\admin\core
+.\_backup\backup_20260120_163822\.quarantine\ui
+.\_backup\backup_20260120_163822\.quarantine\core
+.\_backup\backup_20260120_163822\.quarantine\tests
+.\_backup\backup_20260120_163822\.quarantine\scripts
+.\_backup\backup_20260120_163822\.quarantine\_quarantine
+.\_backup\backup_20260120_163822\.quarantine\legacy
+.\_backup\backup_20260120_163822\.quarantine\ui\controllers
+.\_backup\backup_20260120_163822\.quarantine\ui\windows
+.\_backup\backup_20260120_163822\.quarantine\ui\componentes
+.\_backup\backup_20260120_163822\.quarantine\ui\states
+.\_backup\backup_20260120_163822\.quarantine\ui\adapters
+.\_backup\backup_20260120_163822\.quarantine\tests\integration
+.\_backup\backup_20260120_163822\.quarantine\tests\helpers
+.\_backup\backup_20260120_163822\.quarantine\tests\unit
+.\_backup\backup_20260120_163822\.quarantine\tests\unit\core
+.\_backup\backup_20260120_163822\.quarantine\tests\unit\calculo
+.\_backup\backup_20260120_163822\.quarantine\_quarantine\auto_20260120_152602
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\application
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\legacy_backup
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\change_engine
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\plans
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\analyzers
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\maintenance
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\dashboard
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\engine
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\dashboards
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\impl
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\legacy_backup\patches
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\legacy_backup\analysis
+.\_quarantine\auto_20260120_152602
+.\_quarantine\auto_20260120_152602\tools
+.\admin\tools
+.\admin\__pycache__
+.\admin\core
+.\admin\dashboard
+.\admin\tools\__pycache__
+.\admin\core\__pycache__
+.\admin\dashboard\views
+.\.quarantine\ui
+.\.quarantine\core
+.\.quarantine\tests
+.\.quarantine\scripts
+.\.quarantine\_quarantine
+.\.quarantine\legacy
+.\.quarantine\ui\controllers
+.\.quarantine\ui\windows
+.\.quarantine\ui\componentes
+.\.quarantine\ui\states
+.\.quarantine\ui\adapters
+.\.quarantine\tests\integration
+.\.quarantine\tests\helpers
+.\.quarantine\tests\unit
+.\.quarantine\tests\unit\core
+.\.quarantine\tests\unit\calculo
+.\.quarantine\_quarantine\auto_20260120_152602
+.\.quarantine\legacy\20260120_151252
+.\.quarantine\legacy\20260120_151252\tools
+.\.quarantine\legacy\20260120_151252\application
+.\.quarantine\legacy\20260120_151252\tools\legacy_backup
+.\.quarantine\legacy\20260120_151252\tools\change_engine
+.\.quarantine\legacy\20260120_151252\tools\plans
+.\.quarantine\legacy\20260120_151252\tools\analyzers
+.\.quarantine\legacy\20260120_151252\tools\maintenance
+.\.quarantine\legacy\20260120_151252\tools\dashboard
+.\.quarantine\legacy\20260120_151252\tools\engine
+.\.quarantine\legacy\20260120_151252\tools\dashboards
+.\.quarantine\legacy\20260120_151252\tools\impl
+.\.quarantine\legacy\20260120_151252\tools\legacy_backup\patches
+.\.quarantine\legacy\20260120_151252\tools\legacy_backup\analysis
+.\quarentena\.quarantine
+.\quarentena\admin
+.\quarentena\legacy
+.\quarentena\_backup
+.\quarentena\.quarantine\legacy
+.\quarentena\.quarantine\legacy\20260120_151252
+.\quarentena\.quarantine\legacy\20260120_151252\tools
+.\quarentena\.quarantine\legacy\20260120_151252\tools\legacy_backup
+.\quarentena\.quarantine\legacy\20260120_151252\tools\change_engine
+.\quarentena\.quarantine\legacy\20260120_151252\tools\plans
+.\quarentena\.quarantine\legacy\20260120_151252\tools\analyzers
+.\quarentena\.quarantine\legacy\20260120_151252\tools\maintenance
+.\quarentena\.quarantine\legacy\20260120_151252\tools\engine
+.\quarentena\.quarantine\legacy\20260120_151252\tools\impl
+.\quarentena\.quarantine\legacy\20260120_151252\tools\legacy_backup\patches
+.\quarentena\.quarantine\legacy\20260120_151252\tools\legacy_backup\analysis
+.\quarentena\admin\tools
+.\quarentena\legacy\20260120_151252
+.\quarentena\legacy\20260120_151252\tools
+.\quarentena\legacy\20260120_151252\tools\legacy_backup
+.\quarentena\legacy\20260120_151252\tools\change_engine
+.\quarentena\legacy\20260120_151252\tools\maintenance
+.\quarentena\legacy\20260120_151252\tools\engine
+.\quarentena\legacy\20260120_151252\tools\legacy_backup\patches
+.\quarentena\legacy\20260120_151252\tools\legacy_backup\analysis
+.\quarentena\_backup\backup_20260120_163057
+.\quarentena\_backup\backup_20260120_163822
+.\quarentena\_backup\backup_20260120_163057\.quarantine
+.\quarentena\_backup\backup_20260120_163057\admin
+.\quarentena\_backup\backup_20260120_163057\legacy
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\legacy_backup
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\change_engine
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\plans
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\analyzers
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\maintenance
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\engine
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\impl
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\legacy_backup\patches
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\legacy_backup\analysis
+.\quarentena\_backup\backup_20260120_163057\admin\tools
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\legacy_backup
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\change_engine
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\maintenance
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\engine
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\legacy_backup\patches
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\legacy_backup\analysis
+.\quarentena\_backup\backup_20260120_163822\.quarantine
+.\quarentena\_backup\backup_20260120_163822\admin
+.\quarentena\_backup\backup_20260120_163822\legacy
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\legacy_backup
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\change_engine
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\plans
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\analyzers
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\maintenance
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\engine
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\impl
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\legacy_backup\patches
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\legacy_backup\analysis
+.\quarentena\_backup\backup_20260120_163822\admin\tools
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\legacy_backup
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\change_engine
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\maintenance
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\engine
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\legacy_backup\patches
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\legacy_backup\analysis
+
+ARQUIVOS PYTHON
+.\main.py
+.\ui\theme.py
+.\ui\app.py
+.\ui\modal_base.py
+.\ui\alerts.py
+.\ui\export_success_modal.py
+.\ui\consolidacao.py
+.\ui\deslocamentos_queries.py
+.\ui\db.py
+.\ui\map_preview_modal.py
+.\ui\controller.py
+.\ui\controllers\status_controller.py
+.\ui\windows\history_window.py
+.\ui\windows\config_window.py
+.\ui\windows\preview_window.py
+.\ui\componentes\logo_animator.py
+.\ui\componentes\alert_modal.py
+.\ui\componentes\logo.py
+.\ui\componentes\progress_glow.py
+.\ui\stores\history_store.py
+.\ui\stores\config_store.py
+.\ui\stores\deslocamentos_store.py
+.\ui\layout\header.py
+.\ui\layout\footer.py
+.\ui\layout\file_selector.py
+.\ui\layout\status_bar.py
+.\ui\layout\actions_bar.py
+.\ui\layout\log_panel.py
+.\ui\services\log_service.py
+.\ui\services\thread_service.py
+.\core\calculador.py
+.\core\cache.py
+.\core\utils.py
+.\core\coord_validator.py
+.\core\persistencia_excel.py
+.\core\snapping.py
+.\core\coord_diagnostico.py
+.\core\preprocessador_coordenadas.py
+.\scripts\sanitize.py
+.\legacy\20260120_151252\tools\maintenance\maintenance_dashboard.py
+.\legacy\20260120_151252\tools\dashboards\maintenance_dashboard.py
+.\legacy\20260120_151252\tools\dashboards\tools_dashboard.py
+.\legacy\20260120_151252\application\calculo_service.py
+.\application\services\calculo_service.py
+.\_backup\backup_20260120_163057\main.py
+.\_backup\backup_20260120_163057\ui\theme.py
+.\_backup\backup_20260120_163057\ui\app.py
+.\_backup\backup_20260120_163057\ui\modal_base.py
+.\_backup\backup_20260120_163057\ui\alerts.py
+.\_backup\backup_20260120_163057\ui\export_success_modal.py
+.\_backup\backup_20260120_163057\ui\consolidacao.py
+.\_backup\backup_20260120_163057\ui\deslocamentos_queries.py
+.\_backup\backup_20260120_163057\ui\db.py
+.\_backup\backup_20260120_163057\ui\map_preview_modal.py
+.\_backup\backup_20260120_163057\ui\controller.py
+.\_backup\backup_20260120_163057\ui\controllers\status_controller.py
+.\_backup\backup_20260120_163057\ui\windows\history_window.py
+.\_backup\backup_20260120_163057\ui\windows\config_window.py
+.\_backup\backup_20260120_163057\ui\windows\preview_window.py
+.\_backup\backup_20260120_163057\ui\componentes\logo_animator.py
+.\_backup\backup_20260120_163057\ui\componentes\alert_modal.py
+.\_backup\backup_20260120_163057\ui\componentes\logo.py
+.\_backup\backup_20260120_163057\ui\componentes\progress_glow.py
+.\_backup\backup_20260120_163057\ui\stores\history_store.py
+.\_backup\backup_20260120_163057\ui\stores\config_store.py
+.\_backup\backup_20260120_163057\ui\stores\deslocamentos_store.py
+.\_backup\backup_20260120_163057\ui\layout\header.py
+.\_backup\backup_20260120_163057\ui\layout\footer.py
+.\_backup\backup_20260120_163057\ui\layout\file_selector.py
+.\_backup\backup_20260120_163057\ui\layout\status_bar.py
+.\_backup\backup_20260120_163057\ui\layout\actions_bar.py
+.\_backup\backup_20260120_163057\ui\layout\log_panel.py
+.\_backup\backup_20260120_163057\ui\services\log_service.py
+.\_backup\backup_20260120_163057\ui\services\thread_service.py
+.\_backup\backup_20260120_163057\core\calculador.py
+.\_backup\backup_20260120_163057\core\cache.py
+.\_backup\backup_20260120_163057\core\utils.py
+.\_backup\backup_20260120_163057\core\coord_validator.py
+.\_backup\backup_20260120_163057\core\persistencia_excel.py
+.\_backup\backup_20260120_163057\core\snapping.py
+.\_backup\backup_20260120_163057\core\coord_diagnostico.py
+.\_backup\backup_20260120_163057\core\preprocessador_coordenadas.py
+.\_backup\backup_20260120_163057\scripts\sanitize.py
+.\_backup\backup_20260120_163057\legacy\20260120_151252\tools\maintenance\maintenance_dashboard.py
+.\_backup\backup_20260120_163057\legacy\20260120_151252\tools\dashboards\maintenance_dashboard.py
+.\_backup\backup_20260120_163057\legacy\20260120_151252\tools\dashboards\tools_dashboard.py
+.\_backup\backup_20260120_163057\legacy\20260120_151252\application\calculo_service.py
+.\_backup\backup_20260120_163057\application\services\calculo_service.py
+.\_backup\backup_20260120_163057\_quarantine\auto_20260120_152602\maintenance_dashboard_window.py
+.\_backup\backup_20260120_163057\admin\base.py
+.\_backup\backup_20260120_163057\admin\registry.py
+.\_backup\backup_20260120_163057\admin\dashboard.py
+.\_backup\backup_20260120_163057\admin\__init__.py
+.\_backup\backup_20260120_163057\admin\core\__init__.py
+.\_backup\backup_20260120_163057\admin\core\context.py
+.\_backup\backup_20260120_163057\admin\core\scanner.py
+.\_backup\backup_20260120_163057\admin\core\classifier.py
+.\_backup\backup_20260120_163057\.quarantine\teste_consolidacao.py
+.\_backup\backup_20260120_163057\.quarantine\migrar_db.py
+.\_backup\backup_20260120_163057\.quarantine\ui\__init__.py
+.\_backup\backup_20260120_163057\.quarantine\ui\tooltip.py
+.\_backup\backup_20260120_163057\.quarantine\ui\splash.py
+.\_backup\backup_20260120_163057\.quarantine\ui\message_modal.py
+.\_backup\backup_20260120_163057\.quarantine\ui\modelo_excel.py
+.\_backup\backup_20260120_163057\.quarantine\ui\consolidacao_window.py
+.\_backup\backup_20260120_163057\.quarantine\ui\exportador_excel.py
+.\_backup\backup_20260120_163057\.quarantine\ui\consolidacao_mensal_window.py
+.\_backup\backup_20260120_163057\.quarantine\ui\log_mixin.py
+.\_backup\backup_20260120_163057\.quarantine\ui\progress_mixin.py
+.\_backup\backup_20260120_163057\.quarantine\ui\windows_utils.py
+.\_backup\backup_20260120_163057\.quarantine\ui\controllers\configuracoes.py
+.\_backup\backup_20260120_163057\.quarantine\ui\windows\maintenance_window.py
+.\_backup\backup_20260120_163057\.quarantine\ui\componentes\confirm_open_modal.py
+.\_backup\backup_20260120_163057\.quarantine\ui\states\app_states.py
+.\_backup\backup_20260120_163057\.quarantine\ui\adapters\__init__.py
+.\_backup\backup_20260120_163057\.quarantine\ui\adapters\calculo_adapter.py
+.\_backup\backup_20260120_163057\.quarantine\core\__init__.py
+.\_backup\backup_20260120_163057\.quarantine\core\simulador.py
+.\_backup\backup_20260120_163057\.quarantine\core\ors_client.py
+.\_backup\backup_20260120_163057\.quarantine\core\geocoder.py
+.\_backup\backup_20260120_163057\.quarantine\core\error_summary.py
+.\_backup\backup_20260120_163057\.quarantine\core\validacao_coords.py
+.\_backup\backup_20260120_163057\.quarantine\core\fluxo_validacao.py
+.\_backup\backup_20260120_163057\.quarantine\core\geo_stats.py
+.\_backup\backup_20260120_163057\.quarantine\core\heatmap_data.py
+.\_backup\backup_20260120_163057\.quarantine\core\auditoria_log.py
+.\_backup\backup_20260120_163057\.quarantine\core\events.py
+.\_backup\backup_20260120_163057\.quarantine\tests\test_core_basico.py
+.\_backup\backup_20260120_163057\.quarantine\tests\test_core_retry.py
+.\_backup\backup_20260120_163057\.quarantine\tests\test_core_cancelamento.py
+.\_backup\backup_20260120_163057\.quarantine\tests\__init__.py
+.\_backup\backup_20260120_163057\.quarantine\tests\conftest.py
+.\_backup\backup_20260120_163057\.quarantine\tests\integration\test_fluxo_preprocessador.py
+.\_backup\backup_20260120_163057\.quarantine\tests\helpers\assert_logs.py
+.\_backup\backup_20260120_163057\.quarantine\tests\unit\core\test_coord_diagnostico.py
+.\_backup\backup_20260120_163057\.quarantine\tests\unit\core\test_coord_validator.py
+.\_backup\backup_20260120_163057\.quarantine\tests\unit\calculo\test_calculo_bloqueia_erro.py
+.\_backup\backup_20260120_163057\.quarantine\tests\unit\calculo\test_calculo_aceita_alerta.py
+.\_backup\backup_20260120_163057\.quarantine\tests\unit\calculo\test_cancelamento.py
+.\_backup\backup_20260120_163057\.quarantine\scripts\analise_geral.py
+.\_backup\backup_20260120_163057\.quarantine\scripts\scaffold_arquitetura_alvo.py
+.\_backup\backup_20260120_163057\.quarantine\_quarantine\auto_20260120_152602\dashboard_main.py
+.\_backup\backup_20260120_163057\.quarantine\_quarantine\auto_20260120_152602\admin_dashboard_window.py
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\dashboard\__init__.py
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\dashboard\modern_dashboard.py
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\dashboard\log_bus.py
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\dashboard\tool_runner.py
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\dashboards\__init__.py
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\dashboards\admin_dashboard.py
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\application\__init__.py
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\application\events.py
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\application\dto.py
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\application\ports.py
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\application\mapa_service.py
+.\_backup\backup_20260120_163822\main.py
+.\_backup\backup_20260120_163822\ui\theme.py
+.\_backup\backup_20260120_163822\ui\app.py
+.\_backup\backup_20260120_163822\ui\modal_base.py
+.\_backup\backup_20260120_163822\ui\alerts.py
+.\_backup\backup_20260120_163822\ui\export_success_modal.py
+.\_backup\backup_20260120_163822\ui\consolidacao.py
+.\_backup\backup_20260120_163822\ui\deslocamentos_queries.py
+.\_backup\backup_20260120_163822\ui\db.py
+.\_backup\backup_20260120_163822\ui\map_preview_modal.py
+.\_backup\backup_20260120_163822\ui\controller.py
+.\_backup\backup_20260120_163822\ui\controllers\status_controller.py
+.\_backup\backup_20260120_163822\ui\windows\history_window.py
+.\_backup\backup_20260120_163822\ui\windows\config_window.py
+.\_backup\backup_20260120_163822\ui\windows\preview_window.py
+.\_backup\backup_20260120_163822\ui\componentes\logo_animator.py
+.\_backup\backup_20260120_163822\ui\componentes\alert_modal.py
+.\_backup\backup_20260120_163822\ui\componentes\logo.py
+.\_backup\backup_20260120_163822\ui\componentes\progress_glow.py
+.\_backup\backup_20260120_163822\ui\stores\history_store.py
+.\_backup\backup_20260120_163822\ui\stores\config_store.py
+.\_backup\backup_20260120_163822\ui\stores\deslocamentos_store.py
+.\_backup\backup_20260120_163822\ui\layout\header.py
+.\_backup\backup_20260120_163822\ui\layout\footer.py
+.\_backup\backup_20260120_163822\ui\layout\file_selector.py
+.\_backup\backup_20260120_163822\ui\layout\status_bar.py
+.\_backup\backup_20260120_163822\ui\layout\actions_bar.py
+.\_backup\backup_20260120_163822\ui\layout\log_panel.py
+.\_backup\backup_20260120_163822\ui\services\log_service.py
+.\_backup\backup_20260120_163822\ui\services\thread_service.py
+.\_backup\backup_20260120_163822\core\calculador.py
+.\_backup\backup_20260120_163822\core\cache.py
+.\_backup\backup_20260120_163822\core\utils.py
+.\_backup\backup_20260120_163822\core\coord_validator.py
+.\_backup\backup_20260120_163822\core\persistencia_excel.py
+.\_backup\backup_20260120_163822\core\snapping.py
+.\_backup\backup_20260120_163822\core\coord_diagnostico.py
+.\_backup\backup_20260120_163822\core\preprocessador_coordenadas.py
+.\_backup\backup_20260120_163822\scripts\sanitize.py
+.\_backup\backup_20260120_163822\legacy\20260120_151252\tools\maintenance\maintenance_dashboard.py
+.\_backup\backup_20260120_163822\legacy\20260120_151252\tools\dashboards\maintenance_dashboard.py
+.\_backup\backup_20260120_163822\legacy\20260120_151252\tools\dashboards\tools_dashboard.py
+.\_backup\backup_20260120_163822\legacy\20260120_151252\application\calculo_service.py
+.\_backup\backup_20260120_163822\application\services\calculo_service.py
+.\_backup\backup_20260120_163822\_quarantine\auto_20260120_152602\maintenance_dashboard_window.py
+.\_backup\backup_20260120_163822\admin\base.py
+.\_backup\backup_20260120_163822\admin\registry.py
+.\_backup\backup_20260120_163822\admin\dashboard.py
+.\_backup\backup_20260120_163822\admin\__init__.py
+.\_backup\backup_20260120_163822\admin\dashboard_ctk.py
+.\_backup\backup_20260120_163822\admin\core\__init__.py
+.\_backup\backup_20260120_163822\admin\core\context.py
+.\_backup\backup_20260120_163822\admin\core\scanner.py
+.\_backup\backup_20260120_163822\admin\core\classifier.py
+.\_backup\backup_20260120_163822\.quarantine\teste_consolidacao.py
+.\_backup\backup_20260120_163822\.quarantine\migrar_db.py
+.\_backup\backup_20260120_163822\.quarantine\ui\__init__.py
+.\_backup\backup_20260120_163822\.quarantine\ui\tooltip.py
+.\_backup\backup_20260120_163822\.quarantine\ui\splash.py
+.\_backup\backup_20260120_163822\.quarantine\ui\message_modal.py
+.\_backup\backup_20260120_163822\.quarantine\ui\modelo_excel.py
+.\_backup\backup_20260120_163822\.quarantine\ui\consolidacao_window.py
+.\_backup\backup_20260120_163822\.quarantine\ui\exportador_excel.py
+.\_backup\backup_20260120_163822\.quarantine\ui\consolidacao_mensal_window.py
+.\_backup\backup_20260120_163822\.quarantine\ui\log_mixin.py
+.\_backup\backup_20260120_163822\.quarantine\ui\progress_mixin.py
+.\_backup\backup_20260120_163822\.quarantine\ui\windows_utils.py
+.\_backup\backup_20260120_163822\.quarantine\ui\controllers\configuracoes.py
+.\_backup\backup_20260120_163822\.quarantine\ui\windows\maintenance_window.py
+.\_backup\backup_20260120_163822\.quarantine\ui\componentes\confirm_open_modal.py
+.\_backup\backup_20260120_163822\.quarantine\ui\states\app_states.py
+.\_backup\backup_20260120_163822\.quarantine\ui\adapters\__init__.py
+.\_backup\backup_20260120_163822\.quarantine\ui\adapters\calculo_adapter.py
+.\_backup\backup_20260120_163822\.quarantine\core\__init__.py
+.\_backup\backup_20260120_163822\.quarantine\core\simulador.py
+.\_backup\backup_20260120_163822\.quarantine\core\ors_client.py
+.\_backup\backup_20260120_163822\.quarantine\core\geocoder.py
+.\_backup\backup_20260120_163822\.quarantine\core\error_summary.py
+.\_backup\backup_20260120_163822\.quarantine\core\validacao_coords.py
+.\_backup\backup_20260120_163822\.quarantine\core\fluxo_validacao.py
+.\_backup\backup_20260120_163822\.quarantine\core\geo_stats.py
+.\_backup\backup_20260120_163822\.quarantine\core\heatmap_data.py
+.\_backup\backup_20260120_163822\.quarantine\core\auditoria_log.py
+.\_backup\backup_20260120_163822\.quarantine\core\events.py
+.\_backup\backup_20260120_163822\.quarantine\tests\test_core_basico.py
+.\_backup\backup_20260120_163822\.quarantine\tests\test_core_retry.py
+.\_backup\backup_20260120_163822\.quarantine\tests\test_core_cancelamento.py
+.\_backup\backup_20260120_163822\.quarantine\tests\__init__.py
+.\_backup\backup_20260120_163822\.quarantine\tests\conftest.py
+.\_backup\backup_20260120_163822\.quarantine\tests\integration\test_fluxo_preprocessador.py
+.\_backup\backup_20260120_163822\.quarantine\tests\helpers\assert_logs.py
+.\_backup\backup_20260120_163822\.quarantine\tests\unit\core\test_coord_diagnostico.py
+.\_backup\backup_20260120_163822\.quarantine\tests\unit\core\test_coord_validator.py
+.\_backup\backup_20260120_163822\.quarantine\tests\unit\calculo\test_calculo_bloqueia_erro.py
+.\_backup\backup_20260120_163822\.quarantine\tests\unit\calculo\test_calculo_aceita_alerta.py
+.\_backup\backup_20260120_163822\.quarantine\tests\unit\calculo\test_cancelamento.py
+.\_backup\backup_20260120_163822\.quarantine\scripts\analise_geral.py
+.\_backup\backup_20260120_163822\.quarantine\scripts\scaffold_arquitetura_alvo.py
+.\_backup\backup_20260120_163822\.quarantine\_quarantine\auto_20260120_152602\dashboard_main.py
+.\_backup\backup_20260120_163822\.quarantine\_quarantine\auto_20260120_152602\admin_dashboard_window.py
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\dashboard\__init__.py
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\dashboard\modern_dashboard.py
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\dashboard\log_bus.py
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\dashboard\tool_runner.py
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\dashboards\__init__.py
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\dashboards\admin_dashboard.py
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\application\__init__.py
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\application\events.py
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\application\dto.py
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\application\ports.py
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\application\mapa_service.py
+.\_quarantine\auto_20260120_152602\maintenance_dashboard_window.py
+.\admin\base.py
+.\admin\registry.py
+.\admin\__init__.py
+.\admin\dashboard_ctk.py
+.\admin\sanitize.py
+.\admin\tools\diagnostic_tool.py
+.\admin\tools\quarantine_tool.py
+.\admin\core\__init__.py
+.\admin\core\context.py
+.\admin\core\scanner.py
+.\admin\core\classifier.py
+.\admin\core\route_graph.py
+.\admin\core\risk.py
+.\admin\core\quarantine.py
+.\admin\core\dependency_tree.py
+.\admin\core\heatmap.py
+.\admin\core\risk_score.py
+.\admin\dashboard\dashboard.py
+.\admin\dashboard\views\__init__.py
+.\admin\dashboard\views\overview.py
+.\admin\dashboard\views\routes.py
+.\admin\dashboard\views\logs.py
+.\admin\dashboard\views\actions.py
+.\.quarantine\teste_consolidacao.py
+.\.quarantine\migrar_db.py
+.\.quarantine\ui\__init__.py
+.\.quarantine\ui\tooltip.py
+.\.quarantine\ui\splash.py
+.\.quarantine\ui\message_modal.py
+.\.quarantine\ui\modelo_excel.py
+.\.quarantine\ui\consolidacao_window.py
+.\.quarantine\ui\exportador_excel.py
+.\.quarantine\ui\consolidacao_mensal_window.py
+.\.quarantine\ui\log_mixin.py
+.\.quarantine\ui\progress_mixin.py
+.\.quarantine\ui\windows_utils.py
+.\.quarantine\ui\controllers\configuracoes.py
+.\.quarantine\ui\windows\maintenance_window.py
+.\.quarantine\ui\componentes\confirm_open_modal.py
+.\.quarantine\ui\states\app_states.py
+.\.quarantine\ui\adapters\__init__.py
+.\.quarantine\ui\adapters\calculo_adapter.py
+.\.quarantine\core\__init__.py
+.\.quarantine\core\simulador.py
+.\.quarantine\core\ors_client.py
+.\.quarantine\core\geocoder.py
+.\.quarantine\core\error_summary.py
+.\.quarantine\core\validacao_coords.py
+.\.quarantine\core\fluxo_validacao.py
+.\.quarantine\core\geo_stats.py
+.\.quarantine\core\heatmap_data.py
+.\.quarantine\core\auditoria_log.py
+.\.quarantine\core\events.py
+.\.quarantine\tests\test_core_basico.py
+.\.quarantine\tests\test_core_retry.py
+.\.quarantine\tests\test_core_cancelamento.py
+.\.quarantine\tests\__init__.py
+.\.quarantine\tests\conftest.py
+.\.quarantine\tests\integration\test_fluxo_preprocessador.py
+.\.quarantine\tests\helpers\assert_logs.py
+.\.quarantine\tests\unit\core\test_coord_diagnostico.py
+.\.quarantine\tests\unit\core\test_coord_validator.py
+.\.quarantine\tests\unit\calculo\test_calculo_bloqueia_erro.py
+.\.quarantine\tests\unit\calculo\test_calculo_aceita_alerta.py
+.\.quarantine\tests\unit\calculo\test_cancelamento.py
+.\.quarantine\scripts\analise_geral.py
+.\.quarantine\scripts\scaffold_arquitetura_alvo.py
+.\.quarantine\_quarantine\auto_20260120_152602\dashboard_main.py
+.\.quarantine\_quarantine\auto_20260120_152602\admin_dashboard_window.py
+.\.quarantine\legacy\20260120_151252\tools\dashboard\__init__.py
+.\.quarantine\legacy\20260120_151252\tools\dashboard\modern_dashboard.py
+.\.quarantine\legacy\20260120_151252\tools\dashboard\log_bus.py
+.\.quarantine\legacy\20260120_151252\tools\dashboard\tool_runner.py
+.\.quarantine\legacy\20260120_151252\tools\dashboards\__init__.py
+.\.quarantine\legacy\20260120_151252\tools\dashboards\admin_dashboard.py
+.\.quarantine\legacy\20260120_151252\application\__init__.py
+.\.quarantine\legacy\20260120_151252\application\events.py
+.\.quarantine\legacy\20260120_151252\application\dto.py
+.\.quarantine\legacy\20260120_151252\application\ports.py
+.\.quarantine\legacy\20260120_151252\application\mapa_service.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\bootstrap.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\convert_legacy_tools.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\legacy_backup\run_tests_with_log.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\legacy_backup\fix_test_imports.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\legacy_backup\patch_ui_runtime.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\legacy_backup\apply_all_patches.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\legacy_backup\patch_core_resultados.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\legacy_backup\autofix_engine.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\legacy_backup\rollback.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\legacy_backup\maintenance_engine.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\legacy_backup\run_analysis.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\legacy_backup\patches\patch_progress.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\legacy_backup\analysis\__init__.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\change_engine\__init__.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\change_engine\plan.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\change_engine\step.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\change_engine\checks.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\change_engine\verifiers.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\change_engine\rollback.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\plans\__init__.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\plans\plan_limpeza_tools.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\analyzers\__init__.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\maintenance\__init__.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\engine\__init__.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\impl\databasecleanup.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\impl\toolsanalyzer.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\impl\projectinspector.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\impl\emergencyfix.py
+.\quarentena\admin\tools\cache_tool.py
+.\quarentena\admin\tools\backup_tool.py
+.\quarentena\admin\tools\structure_check_tool.py
+.\quarentena\admin\tools\quarantine_tool.py
+.\quarentena\admin\tools\diagnostic_tool.py
+.\quarentena\legacy\20260120_151252\tools\legacy_backup\patch_statusbar_layout.py
+.\quarentena\legacy\20260120_151252\tools\legacy_backup\diff_contracts.py
+.\quarentena\legacy\20260120_151252\tools\legacy_backup\diff_behavior.py
+.\quarentena\legacy\20260120_151252\tools\legacy_backup\diff_layout.py
+.\quarentena\legacy\20260120_151252\tools\legacy_backup\patch_registry.py
+.\quarentena\legacy\20260120_151252\tools\legacy_backup\analyze_project.py
+.\quarentena\legacy\20260120_151252\tools\legacy_backup\apply_patches.py
+.\quarentena\legacy\20260120_151252\tools\legacy_backup\analyzer.py
+.\quarentena\legacy\20260120_151252\tools\legacy_backup\patches\patch_statusbar.py
+.\quarentena\legacy\20260120_151252\tools\legacy_backup\patches\patch_core_excel.py
+.\quarentena\legacy\20260120_151252\tools\legacy_backup\analysis\project_analyzer.py
+.\quarentena\legacy\20260120_151252\tools\change_engine\engine.py
+.\quarentena\legacy\20260120_151252\tools\change_engine\registry.py
+.\quarentena\legacy\20260120_151252\tools\maintenance\maintenance_runner.py
+.\quarentena\legacy\20260120_151252\tools\engine\tool_result.py
+.\quarentena\legacy\20260120_151252\tools\engine\base_tool.py
+.\quarentena\legacy\20260120_151252\tools\engine\registry.py
+.\quarentena\legacy\20260120_151252\tools\engine\runner.py
+.\quarentena\legacy\20260120_151252\tools\engine\logger.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\bootstrap.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\convert_legacy_tools.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\legacy_backup\run_tests_with_log.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\legacy_backup\fix_test_imports.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\legacy_backup\patch_ui_runtime.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\legacy_backup\apply_all_patches.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\legacy_backup\patch_core_resultados.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\legacy_backup\autofix_engine.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\legacy_backup\rollback.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\legacy_backup\maintenance_engine.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\legacy_backup\run_analysis.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\legacy_backup\patches\patch_progress.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\legacy_backup\analysis\__init__.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\change_engine\__init__.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\change_engine\plan.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\change_engine\step.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\change_engine\checks.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\change_engine\verifiers.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\change_engine\rollback.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\plans\__init__.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\plans\plan_limpeza_tools.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\analyzers\__init__.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\maintenance\__init__.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\engine\__init__.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\impl\databasecleanup.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\impl\toolsanalyzer.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\impl\projectinspector.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\impl\emergencyfix.py
+.\quarentena\_backup\backup_20260120_163057\admin\tools\cache_tool.py
+.\quarentena\_backup\backup_20260120_163057\admin\tools\backup_tool.py
+.\quarentena\_backup\backup_20260120_163057\admin\tools\structure_check_tool.py
+.\quarentena\_backup\backup_20260120_163057\admin\tools\quarantine_tool.py
+.\quarentena\_backup\backup_20260120_163057\admin\tools\diagnostic_tool.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\legacy_backup\patch_statusbar_layout.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\legacy_backup\diff_contracts.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\legacy_backup\diff_behavior.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\legacy_backup\diff_layout.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\legacy_backup\patch_registry.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\legacy_backup\analyze_project.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\legacy_backup\apply_patches.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\legacy_backup\analyzer.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\legacy_backup\patches\patch_statusbar.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\legacy_backup\patches\patch_core_excel.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\legacy_backup\analysis\project_analyzer.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\change_engine\engine.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\change_engine\registry.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\maintenance\maintenance_runner.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\engine\tool_result.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\engine\base_tool.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\engine\registry.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\engine\runner.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\engine\logger.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\bootstrap.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\convert_legacy_tools.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\legacy_backup\run_tests_with_log.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\legacy_backup\fix_test_imports.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\legacy_backup\patch_ui_runtime.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\legacy_backup\apply_all_patches.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\legacy_backup\patch_core_resultados.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\legacy_backup\autofix_engine.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\legacy_backup\rollback.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\legacy_backup\maintenance_engine.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\legacy_backup\run_analysis.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\legacy_backup\patches\patch_progress.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\legacy_backup\analysis\__init__.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\change_engine\__init__.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\change_engine\plan.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\change_engine\step.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\change_engine\checks.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\change_engine\verifiers.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\change_engine\rollback.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\plans\__init__.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\plans\plan_limpeza_tools.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\analyzers\__init__.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\maintenance\__init__.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\engine\__init__.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\impl\databasecleanup.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\impl\toolsanalyzer.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\impl\projectinspector.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\impl\emergencyfix.py
+.\quarentena\_backup\backup_20260120_163822\admin\tools\cache_tool.py
+.\quarentena\_backup\backup_20260120_163822\admin\tools\backup_tool.py
+.\quarentena\_backup\backup_20260120_163822\admin\tools\structure_check_tool.py
+.\quarentena\_backup\backup_20260120_163822\admin\tools\quarantine_tool.py
+.\quarentena\_backup\backup_20260120_163822\admin\tools\diagnostic_tool.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\legacy_backup\patch_statusbar_layout.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\legacy_backup\diff_contracts.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\legacy_backup\diff_behavior.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\legacy_backup\diff_layout.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\legacy_backup\patch_registry.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\legacy_backup\analyze_project.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\legacy_backup\apply_patches.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\legacy_backup\analyzer.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\legacy_backup\patches\patch_statusbar.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\legacy_backup\patches\patch_core_excel.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\legacy_backup\analysis\project_analyzer.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\change_engine\engine.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\change_engine\registry.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\maintenance\maintenance_runner.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\engine\tool_result.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\engine\base_tool.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\engine\registry.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\engine\runner.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\engine\logger.py
+
+IMPORTS INTERNOS
+
+Arquivo: .\ui\app.py
+from ui.windows.config_window import ConfigWindow
+from ui.windows.history_window import HistoryWindow
+from ui.windows.preview_window import PreviewWindow
+from ui.componentes.alert_modal import AlertModal
+from ui.stores.config_store import carregar_config
+from ui.theme import aplicar_tema
+from ui.controller import AppController
+from ui.layout.header import Header
+from ui.layout.footer import Footer
+from ui.layout.file_selector import FileSelector
+from ui.layout.status_bar import StatusBar
+from ui.layout.actions_bar import ActionsBar
+from ui.services.log_service import LogService
+from ui.controllers.status_controller import StatusController
+from ui.services.thread_service import ThreadService
+from ui.layout.log_panel import LogPanel
+from ui.stores.config_store import carregar_config
+from ui.stores.history_store import inicializar_db
+from ui.theme import aplicar_tema
+
+Arquivo: .\ui\alerts.py
+from ui.componentes.alert_modal import AlertModal
+
+Arquivo: .\ui\export_success_modal.py
+from ui.modal_base import ModalBase
+
+Arquivo: .\ui\controller.py
+from core.calculador import CalculadorDeslocamentos
+from core.persistencia_excel import aplicar_correcoes_excel
+from ui.map_preview_modal import abrir_mapa_validacao
+from ui.componentes.alert_modal import AlertModal
+from ui.stores.deslocamentos_store import inserir_registros
+from ui.stores.history_store import registrar_execucao
+
+Arquivo: .\ui\windows\history_window.py
+from ui.modal_base import ModalBase
+from ui.export_success_modal import ExportSuccessModal
+from ui.componentes.alert_modal import AlertModal
+from ui.stores.history_store import listar_execucoes
+from ui.deslocamentos_queries import (
+
+Arquivo: .\ui\windows\config_window.py
+from ui.modal_base import ModalBase
+from ui.stores.config_store import salvar_config
+from ui.alerts import alert_error, alert_success
+from ui.theme import TEMAS
+
+Arquivo: .\ui\windows\preview_window.py
+from ui.modal_base import ModalBase
+from ui.componentes.alert_modal import AlertModal
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\ui\componentes\alert_modal.py
+from ui.modal_base import ModalBase
+
+Arquivo: .\ui\stores\history_store.py
+from ui.db import DB_PATH
+
+Arquivo: .\ui\layout\header.py
+from ui.componentes.logo_animator import LogoAnimator
+from ui.componentes.logo import Logo
+
+Arquivo: .\ui\layout\status_bar.py
+from ui.componentes.progress_glow import ProgressGlow
+
+Arquivo: .\core\calculador.py
+from core.coord_validator import validar_coordenada
+
+Arquivo: .\core\coord_diagnostico.py
+from core.coord_validator import validar_coordenada
+
+Arquivo: .\core\preprocessador_coordenadas.py
+from core.coord_diagnostico import diagnosticar_coordenada
+from ui.map_preview_modal import abrir_mapa_validacao
+
+Arquivo: .\application\services\calculo_service.py
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\_backup\backup_20260120_163057\ui\app.py
+from ui.windows.config_window import ConfigWindow
+from ui.windows.history_window import HistoryWindow
+from ui.windows.preview_window import PreviewWindow
+from ui.componentes.alert_modal import AlertModal
+from ui.stores.config_store import carregar_config
+from ui.theme import aplicar_tema
+from ui.controller import AppController
+from ui.layout.header import Header
+from ui.layout.footer import Footer
+from ui.layout.file_selector import FileSelector
+from ui.layout.status_bar import StatusBar
+from ui.layout.actions_bar import ActionsBar
+from ui.services.log_service import LogService
+from ui.controllers.status_controller import StatusController
+from ui.services.thread_service import ThreadService
+from ui.layout.log_panel import LogPanel
+from ui.stores.config_store import carregar_config
+from ui.stores.history_store import inicializar_db
+from ui.theme import aplicar_tema
+
+Arquivo: .\_backup\backup_20260120_163057\ui\alerts.py
+from ui.componentes.alert_modal import AlertModal
+
+Arquivo: .\_backup\backup_20260120_163057\ui\export_success_modal.py
+from ui.modal_base import ModalBase
+
+Arquivo: .\_backup\backup_20260120_163057\ui\controller.py
+from core.calculador import CalculadorDeslocamentos
+from core.persistencia_excel import aplicar_correcoes_excel
+from ui.map_preview_modal import abrir_mapa_validacao
+from ui.componentes.alert_modal import AlertModal
+from ui.stores.deslocamentos_store import inserir_registros
+from ui.stores.history_store import registrar_execucao
+
+Arquivo: .\_backup\backup_20260120_163057\ui\windows\history_window.py
+from ui.modal_base import ModalBase
+from ui.export_success_modal import ExportSuccessModal
+from ui.componentes.alert_modal import AlertModal
+from ui.stores.history_store import listar_execucoes
+from ui.deslocamentos_queries import (
+
+Arquivo: .\_backup\backup_20260120_163057\ui\windows\config_window.py
+from ui.modal_base import ModalBase
+from ui.stores.config_store import salvar_config
+from ui.alerts import alert_error, alert_success
+from ui.theme import TEMAS
+
+Arquivo: .\_backup\backup_20260120_163057\ui\windows\preview_window.py
+from ui.modal_base import ModalBase
+from ui.componentes.alert_modal import AlertModal
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\_backup\backup_20260120_163057\ui\componentes\alert_modal.py
+from ui.modal_base import ModalBase
+
+Arquivo: .\_backup\backup_20260120_163057\ui\stores\history_store.py
+from ui.db import DB_PATH
+
+Arquivo: .\_backup\backup_20260120_163057\ui\layout\header.py
+from ui.componentes.logo_animator import LogoAnimator
+from ui.componentes.logo import Logo
+
+Arquivo: .\_backup\backup_20260120_163057\ui\layout\status_bar.py
+from ui.componentes.progress_glow import ProgressGlow
+
+Arquivo: .\_backup\backup_20260120_163057\core\calculador.py
+from core.coord_validator import validar_coordenada
+
+Arquivo: .\_backup\backup_20260120_163057\core\coord_diagnostico.py
+from core.coord_validator import validar_coordenada
+
+Arquivo: .\_backup\backup_20260120_163057\core\preprocessador_coordenadas.py
+from core.coord_diagnostico import diagnosticar_coordenada
+from ui.map_preview_modal import abrir_mapa_validacao
+
+Arquivo: .\_backup\backup_20260120_163057\application\services\calculo_service.py
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\_backup\backup_20260120_163057\.quarantine\teste_consolidacao.py
+from ui.consolidacao import consolidar_arquivos
+
+Arquivo: .\_backup\backup_20260120_163057\.quarantine\ui\message_modal.py
+from ui.modal_base import ModalBase
+
+Arquivo: .\_backup\backup_20260120_163057\.quarantine\ui\consolidacao_window.py
+from ui.modal_base import ModalBase
+from ui.deslocamentos_queries import (
+
+Arquivo: .\_backup\backup_20260120_163057\.quarantine\ui\consolidacao_mensal_window.py
+from ui.modal_base import ModalBase
+from ui.deslocamentos_queries import resumo_por_periodo
+
+Arquivo: .\_backup\backup_20260120_163057\.quarantine\ui\controllers\configuracoes.py
+from ui.config_store import carregar_config, salvar_config
+
+Arquivo: .\_backup\backup_20260120_163057\.quarantine\ui\componentes\confirm_open_modal.py
+from ui.modal_base import ModalBase
+
+Arquivo: .\_backup\backup_20260120_163057\.quarantine\ui\adapters\calculo_adapter.py
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\_backup\backup_20260120_163057\.quarantine\core\fluxo_validacao.py
+from core.snapping import snap_lote
+
+Arquivo: .\_backup\backup_20260120_163057\.quarantine\tests\test_core_basico.py
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\_backup\backup_20260120_163057\.quarantine\tests\test_core_retry.py
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\_backup\backup_20260120_163057\.quarantine\tests\test_core_cancelamento.py
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\_backup\backup_20260120_163057\.quarantine\tests\integration\test_fluxo_preprocessador.py
+from core.preprocessador_coordenadas import PreProcessadorCoordenadas
+
+Arquivo: .\_backup\backup_20260120_163057\.quarantine\tests\unit\core\test_coord_diagnostico.py
+from core.coord_diagnostico import diagnosticar_coordenada
+
+Arquivo: .\_backup\backup_20260120_163057\.quarantine\tests\unit\core\test_coord_validator.py
+from core.coord_validator import validar_coordenada
+
+Arquivo: .\_backup\backup_20260120_163057\.quarantine\tests\unit\calculo\test_calculo_bloqueia_erro.py
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\_backup\backup_20260120_163057\.quarantine\tests\unit\calculo\test_calculo_aceita_alerta.py
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\_backup\backup_20260120_163057\.quarantine\tests\unit\calculo\test_cancelamento.py
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\_backup\backup_20260120_163057\.quarantine\scripts\scaffold_arquitetura_alvo.py
+from dataclasses import dataclass
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\application\dto.py
+from dataclasses import dataclass
+
+Arquivo: .\_backup\backup_20260120_163822\ui\app.py
+from ui.windows.config_window import ConfigWindow
+from ui.windows.history_window import HistoryWindow
+from ui.windows.preview_window import PreviewWindow
+from ui.componentes.alert_modal import AlertModal
+from ui.stores.config_store import carregar_config
+from ui.theme import aplicar_tema
+from ui.controller import AppController
+from ui.layout.header import Header
+from ui.layout.footer import Footer
+from ui.layout.file_selector import FileSelector
+from ui.layout.status_bar import StatusBar
+from ui.layout.actions_bar import ActionsBar
+from ui.services.log_service import LogService
+from ui.controllers.status_controller import StatusController
+from ui.services.thread_service import ThreadService
+from ui.layout.log_panel import LogPanel
+from ui.stores.config_store import carregar_config
+from ui.stores.history_store import inicializar_db
+from ui.theme import aplicar_tema
+
+Arquivo: .\_backup\backup_20260120_163822\ui\alerts.py
+from ui.componentes.alert_modal import AlertModal
+
+Arquivo: .\_backup\backup_20260120_163822\ui\export_success_modal.py
+from ui.modal_base import ModalBase
+
+Arquivo: .\_backup\backup_20260120_163822\ui\controller.py
+from core.calculador import CalculadorDeslocamentos
+from core.persistencia_excel import aplicar_correcoes_excel
+from ui.map_preview_modal import abrir_mapa_validacao
+from ui.componentes.alert_modal import AlertModal
+from ui.stores.deslocamentos_store import inserir_registros
+from ui.stores.history_store import registrar_execucao
+
+Arquivo: .\_backup\backup_20260120_163822\ui\windows\history_window.py
+from ui.modal_base import ModalBase
+from ui.export_success_modal import ExportSuccessModal
+from ui.componentes.alert_modal import AlertModal
+from ui.stores.history_store import listar_execucoes
+from ui.deslocamentos_queries import (
+
+Arquivo: .\_backup\backup_20260120_163822\ui\windows\config_window.py
+from ui.modal_base import ModalBase
+from ui.stores.config_store import salvar_config
+from ui.alerts import alert_error, alert_success
+from ui.theme import TEMAS
+
+Arquivo: .\_backup\backup_20260120_163822\ui\windows\preview_window.py
+from ui.modal_base import ModalBase
+from ui.componentes.alert_modal import AlertModal
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\_backup\backup_20260120_163822\ui\componentes\alert_modal.py
+from ui.modal_base import ModalBase
+
+Arquivo: .\_backup\backup_20260120_163822\ui\stores\history_store.py
+from ui.db import DB_PATH
+
+Arquivo: .\_backup\backup_20260120_163822\ui\layout\header.py
+from ui.componentes.logo_animator import LogoAnimator
+from ui.componentes.logo import Logo
+
+Arquivo: .\_backup\backup_20260120_163822\ui\layout\status_bar.py
+from ui.componentes.progress_glow import ProgressGlow
+
+Arquivo: .\_backup\backup_20260120_163822\core\calculador.py
+from core.coord_validator import validar_coordenada
+
+Arquivo: .\_backup\backup_20260120_163822\core\coord_diagnostico.py
+from core.coord_validator import validar_coordenada
+
+Arquivo: .\_backup\backup_20260120_163822\core\preprocessador_coordenadas.py
+from core.coord_diagnostico import diagnosticar_coordenada
+from ui.map_preview_modal import abrir_mapa_validacao
+
+Arquivo: .\_backup\backup_20260120_163822\application\services\calculo_service.py
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\_backup\backup_20260120_163822\.quarantine\teste_consolidacao.py
+from ui.consolidacao import consolidar_arquivos
+
+Arquivo: .\_backup\backup_20260120_163822\.quarantine\ui\message_modal.py
+from ui.modal_base import ModalBase
+
+Arquivo: .\_backup\backup_20260120_163822\.quarantine\ui\consolidacao_window.py
+from ui.modal_base import ModalBase
+from ui.deslocamentos_queries import (
+
+Arquivo: .\_backup\backup_20260120_163822\.quarantine\ui\consolidacao_mensal_window.py
+from ui.modal_base import ModalBase
+from ui.deslocamentos_queries import resumo_por_periodo
+
+Arquivo: .\_backup\backup_20260120_163822\.quarantine\ui\controllers\configuracoes.py
+from ui.config_store import carregar_config, salvar_config
+
+Arquivo: .\_backup\backup_20260120_163822\.quarantine\ui\componentes\confirm_open_modal.py
+from ui.modal_base import ModalBase
+
+Arquivo: .\_backup\backup_20260120_163822\.quarantine\ui\adapters\calculo_adapter.py
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\_backup\backup_20260120_163822\.quarantine\core\fluxo_validacao.py
+from core.snapping import snap_lote
+
+Arquivo: .\_backup\backup_20260120_163822\.quarantine\tests\test_core_basico.py
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\_backup\backup_20260120_163822\.quarantine\tests\test_core_retry.py
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\_backup\backup_20260120_163822\.quarantine\tests\test_core_cancelamento.py
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\_backup\backup_20260120_163822\.quarantine\tests\integration\test_fluxo_preprocessador.py
+from core.preprocessador_coordenadas import PreProcessadorCoordenadas
+
+Arquivo: .\_backup\backup_20260120_163822\.quarantine\tests\unit\core\test_coord_diagnostico.py
+from core.coord_diagnostico import diagnosticar_coordenada
+
+Arquivo: .\_backup\backup_20260120_163822\.quarantine\tests\unit\core\test_coord_validator.py
+from core.coord_validator import validar_coordenada
+
+Arquivo: .\_backup\backup_20260120_163822\.quarantine\tests\unit\calculo\test_calculo_bloqueia_erro.py
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\_backup\backup_20260120_163822\.quarantine\tests\unit\calculo\test_calculo_aceita_alerta.py
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\_backup\backup_20260120_163822\.quarantine\tests\unit\calculo\test_cancelamento.py
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\_backup\backup_20260120_163822\.quarantine\scripts\scaffold_arquitetura_alvo.py
+from dataclasses import dataclass
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\application\dto.py
+from dataclasses import dataclass
+
+Arquivo: .\.quarantine\teste_consolidacao.py
+from ui.consolidacao import consolidar_arquivos
+
+Arquivo: .\.quarantine\ui\message_modal.py
+from ui.modal_base import ModalBase
+
+Arquivo: .\.quarantine\ui\consolidacao_window.py
+from ui.modal_base import ModalBase
+from ui.deslocamentos_queries import (
+
+Arquivo: .\.quarantine\ui\consolidacao_mensal_window.py
+from ui.modal_base import ModalBase
+from ui.deslocamentos_queries import resumo_por_periodo
+
+Arquivo: .\.quarantine\ui\controllers\configuracoes.py
+from ui.config_store import carregar_config, salvar_config
+
+Arquivo: .\.quarantine\ui\componentes\confirm_open_modal.py
+from ui.modal_base import ModalBase
+
+Arquivo: .\.quarantine\ui\adapters\calculo_adapter.py
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\.quarantine\core\fluxo_validacao.py
+from core.snapping import snap_lote
+
+Arquivo: .\.quarantine\tests\test_core_basico.py
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\.quarantine\tests\test_core_retry.py
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\.quarantine\tests\test_core_cancelamento.py
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\.quarantine\tests\integration\test_fluxo_preprocessador.py
+from core.preprocessador_coordenadas import PreProcessadorCoordenadas
+
+Arquivo: .\.quarantine\tests\unit\core\test_coord_diagnostico.py
+from core.coord_diagnostico import diagnosticar_coordenada
+
+Arquivo: .\.quarantine\tests\unit\core\test_coord_validator.py
+from core.coord_validator import validar_coordenada
+
+Arquivo: .\.quarantine\tests\unit\calculo\test_calculo_bloqueia_erro.py
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\.quarantine\tests\unit\calculo\test_calculo_aceita_alerta.py
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\.quarantine\tests\unit\calculo\test_cancelamento.py
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\.quarantine\scripts\scaffold_arquitetura_alvo.py
+from dataclasses import dataclass
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\.quarantine\legacy\20260120_151252\application\dto.py
+from dataclasses import dataclass
+
+POSSIVEIS ARQUIVOS NAO UTILIZADOS
+.\main.py
+.\ui\theme.py
+.\ui\app.py
+.\ui\modal_base.py
+.\ui\alerts.py
+.\ui\export_success_modal.py
+.\ui\consolidacao.py
+.\ui\deslocamentos_queries.py
+.\ui\db.py
+.\ui\map_preview_modal.py
+.\ui\controller.py
+.\ui\controllers\status_controller.py
+.\ui\windows\history_window.py
+.\ui\windows\config_window.py
+.\ui\windows\preview_window.py
+.\ui\componentes\logo_animator.py
+.\ui\componentes\alert_modal.py
+.\ui\componentes\logo.py
+.\ui\componentes\progress_glow.py
+.\ui\stores\history_store.py
+.\ui\stores\config_store.py
+.\ui\stores\deslocamentos_store.py
+.\ui\layout\header.py
+.\ui\layout\footer.py
+.\ui\layout\file_selector.py
+.\ui\layout\status_bar.py
+.\ui\layout\actions_bar.py
+.\ui\layout\log_panel.py
+.\ui\services\log_service.py
+.\ui\services\thread_service.py
+.\core\calculador.py
+.\core\cache.py
+.\core\utils.py
+.\core\coord_validator.py
+.\core\persistencia_excel.py
+.\core\snapping.py
+.\core\coord_diagnostico.py
+.\core\preprocessador_coordenadas.py
+.\scripts\sanitize.py
+.\legacy\20260120_151252\tools\maintenance\maintenance_dashboard.py
+.\legacy\20260120_151252\tools\dashboards\maintenance_dashboard.py
+.\legacy\20260120_151252\tools\dashboards\tools_dashboard.py
+.\legacy\20260120_151252\application\calculo_service.py
+.\application\services\calculo_service.py
+.\_backup\backup_20260120_163057\main.py
+.\_backup\backup_20260120_163057\ui\theme.py
+.\_backup\backup_20260120_163057\ui\app.py
+.\_backup\backup_20260120_163057\ui\modal_base.py
+.\_backup\backup_20260120_163057\ui\alerts.py
+.\_backup\backup_20260120_163057\ui\export_success_modal.py
+.\_backup\backup_20260120_163057\ui\consolidacao.py
+.\_backup\backup_20260120_163057\ui\deslocamentos_queries.py
+.\_backup\backup_20260120_163057\ui\db.py
+.\_backup\backup_20260120_163057\ui\map_preview_modal.py
+.\_backup\backup_20260120_163057\ui\controller.py
+.\_backup\backup_20260120_163057\ui\controllers\status_controller.py
+.\_backup\backup_20260120_163057\ui\windows\history_window.py
+.\_backup\backup_20260120_163057\ui\windows\config_window.py
+.\_backup\backup_20260120_163057\ui\windows\preview_window.py
+.\_backup\backup_20260120_163057\ui\componentes\logo_animator.py
+.\_backup\backup_20260120_163057\ui\componentes\alert_modal.py
+.\_backup\backup_20260120_163057\ui\componentes\logo.py
+.\_backup\backup_20260120_163057\ui\componentes\progress_glow.py
+.\_backup\backup_20260120_163057\ui\stores\history_store.py
+.\_backup\backup_20260120_163057\ui\stores\config_store.py
+.\_backup\backup_20260120_163057\ui\stores\deslocamentos_store.py
+.\_backup\backup_20260120_163057\ui\layout\header.py
+.\_backup\backup_20260120_163057\ui\layout\footer.py
+.\_backup\backup_20260120_163057\ui\layout\file_selector.py
+.\_backup\backup_20260120_163057\ui\layout\status_bar.py
+.\_backup\backup_20260120_163057\ui\layout\actions_bar.py
+.\_backup\backup_20260120_163057\ui\layout\log_panel.py
+.\_backup\backup_20260120_163057\ui\services\log_service.py
+.\_backup\backup_20260120_163057\ui\services\thread_service.py
+.\_backup\backup_20260120_163057\core\calculador.py
+.\_backup\backup_20260120_163057\core\cache.py
+.\_backup\backup_20260120_163057\core\utils.py
+.\_backup\backup_20260120_163057\core\coord_validator.py
+.\_backup\backup_20260120_163057\core\persistencia_excel.py
+.\_backup\backup_20260120_163057\core\snapping.py
+.\_backup\backup_20260120_163057\core\coord_diagnostico.py
+.\_backup\backup_20260120_163057\core\preprocessador_coordenadas.py
+.\_backup\backup_20260120_163057\scripts\sanitize.py
+.\_backup\backup_20260120_163057\legacy\20260120_151252\tools\maintenance\maintenance_dashboard.py
+.\_backup\backup_20260120_163057\legacy\20260120_151252\tools\dashboards\maintenance_dashboard.py
+.\_backup\backup_20260120_163057\legacy\20260120_151252\tools\dashboards\tools_dashboard.py
+.\_backup\backup_20260120_163057\legacy\20260120_151252\application\calculo_service.py
+.\_backup\backup_20260120_163057\application\services\calculo_service.py
+.\_backup\backup_20260120_163057\_quarantine\auto_20260120_152602\maintenance_dashboard_window.py
+.\_backup\backup_20260120_163057\admin\base.py
+.\_backup\backup_20260120_163057\admin\registry.py
+.\_backup\backup_20260120_163057\admin\dashboard.py
+.\_backup\backup_20260120_163057\admin\__init__.py
+.\_backup\backup_20260120_163057\admin\core\__init__.py
+.\_backup\backup_20260120_163057\admin\core\context.py
+.\_backup\backup_20260120_163057\admin\core\scanner.py
+.\_backup\backup_20260120_163057\admin\core\classifier.py
+.\_backup\backup_20260120_163057\.quarantine\teste_consolidacao.py
+.\_backup\backup_20260120_163057\.quarantine\migrar_db.py
+.\_backup\backup_20260120_163057\.quarantine\ui\__init__.py
+.\_backup\backup_20260120_163057\.quarantine\ui\tooltip.py
+.\_backup\backup_20260120_163057\.quarantine\ui\splash.py
+.\_backup\backup_20260120_163057\.quarantine\ui\message_modal.py
+.\_backup\backup_20260120_163057\.quarantine\ui\modelo_excel.py
+.\_backup\backup_20260120_163057\.quarantine\ui\consolidacao_window.py
+.\_backup\backup_20260120_163057\.quarantine\ui\exportador_excel.py
+.\_backup\backup_20260120_163057\.quarantine\ui\consolidacao_mensal_window.py
+.\_backup\backup_20260120_163057\.quarantine\ui\log_mixin.py
+.\_backup\backup_20260120_163057\.quarantine\ui\progress_mixin.py
+.\_backup\backup_20260120_163057\.quarantine\ui\windows_utils.py
+.\_backup\backup_20260120_163057\.quarantine\ui\controllers\configuracoes.py
+.\_backup\backup_20260120_163057\.quarantine\ui\windows\maintenance_window.py
+.\_backup\backup_20260120_163057\.quarantine\ui\componentes\confirm_open_modal.py
+.\_backup\backup_20260120_163057\.quarantine\ui\states\app_states.py
+.\_backup\backup_20260120_163057\.quarantine\ui\adapters\__init__.py
+.\_backup\backup_20260120_163057\.quarantine\ui\adapters\calculo_adapter.py
+.\_backup\backup_20260120_163057\.quarantine\core\__init__.py
+.\_backup\backup_20260120_163057\.quarantine\core\simulador.py
+.\_backup\backup_20260120_163057\.quarantine\core\ors_client.py
+.\_backup\backup_20260120_163057\.quarantine\core\geocoder.py
+.\_backup\backup_20260120_163057\.quarantine\core\error_summary.py
+.\_backup\backup_20260120_163057\.quarantine\core\validacao_coords.py
+.\_backup\backup_20260120_163057\.quarantine\core\fluxo_validacao.py
+.\_backup\backup_20260120_163057\.quarantine\core\geo_stats.py
+.\_backup\backup_20260120_163057\.quarantine\core\heatmap_data.py
+.\_backup\backup_20260120_163057\.quarantine\core\auditoria_log.py
+.\_backup\backup_20260120_163057\.quarantine\core\events.py
+.\_backup\backup_20260120_163057\.quarantine\tests\test_core_basico.py
+.\_backup\backup_20260120_163057\.quarantine\tests\test_core_retry.py
+.\_backup\backup_20260120_163057\.quarantine\tests\test_core_cancelamento.py
+.\_backup\backup_20260120_163057\.quarantine\tests\__init__.py
+.\_backup\backup_20260120_163057\.quarantine\tests\conftest.py
+.\_backup\backup_20260120_163057\.quarantine\tests\integration\test_fluxo_preprocessador.py
+.\_backup\backup_20260120_163057\.quarantine\tests\helpers\assert_logs.py
+.\_backup\backup_20260120_163057\.quarantine\tests\unit\core\test_coord_diagnostico.py
+.\_backup\backup_20260120_163057\.quarantine\tests\unit\core\test_coord_validator.py
+.\_backup\backup_20260120_163057\.quarantine\tests\unit\calculo\test_calculo_bloqueia_erro.py
+.\_backup\backup_20260120_163057\.quarantine\tests\unit\calculo\test_calculo_aceita_alerta.py
+.\_backup\backup_20260120_163057\.quarantine\tests\unit\calculo\test_cancelamento.py
+.\_backup\backup_20260120_163057\.quarantine\scripts\analise_geral.py
+.\_backup\backup_20260120_163057\.quarantine\scripts\scaffold_arquitetura_alvo.py
+.\_backup\backup_20260120_163057\.quarantine\_quarantine\auto_20260120_152602\dashboard_main.py
+.\_backup\backup_20260120_163057\.quarantine\_quarantine\auto_20260120_152602\admin_dashboard_window.py
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\dashboard\__init__.py
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\dashboard\modern_dashboard.py
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\dashboard\log_bus.py
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\dashboard\tool_runner.py
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\dashboards\__init__.py
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\dashboards\admin_dashboard.py
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\application\__init__.py
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\application\events.py
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\application\dto.py
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\application\ports.py
+.\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\application\mapa_service.py
+.\_backup\backup_20260120_163822\main.py
+.\_backup\backup_20260120_163822\ui\theme.py
+.\_backup\backup_20260120_163822\ui\app.py
+.\_backup\backup_20260120_163822\ui\modal_base.py
+.\_backup\backup_20260120_163822\ui\alerts.py
+.\_backup\backup_20260120_163822\ui\export_success_modal.py
+.\_backup\backup_20260120_163822\ui\consolidacao.py
+.\_backup\backup_20260120_163822\ui\deslocamentos_queries.py
+.\_backup\backup_20260120_163822\ui\db.py
+.\_backup\backup_20260120_163822\ui\map_preview_modal.py
+.\_backup\backup_20260120_163822\ui\controller.py
+.\_backup\backup_20260120_163822\ui\controllers\status_controller.py
+.\_backup\backup_20260120_163822\ui\windows\history_window.py
+.\_backup\backup_20260120_163822\ui\windows\config_window.py
+.\_backup\backup_20260120_163822\ui\windows\preview_window.py
+.\_backup\backup_20260120_163822\ui\componentes\logo_animator.py
+.\_backup\backup_20260120_163822\ui\componentes\alert_modal.py
+.\_backup\backup_20260120_163822\ui\componentes\logo.py
+.\_backup\backup_20260120_163822\ui\componentes\progress_glow.py
+.\_backup\backup_20260120_163822\ui\stores\history_store.py
+.\_backup\backup_20260120_163822\ui\stores\config_store.py
+.\_backup\backup_20260120_163822\ui\stores\deslocamentos_store.py
+.\_backup\backup_20260120_163822\ui\layout\header.py
+.\_backup\backup_20260120_163822\ui\layout\footer.py
+.\_backup\backup_20260120_163822\ui\layout\file_selector.py
+.\_backup\backup_20260120_163822\ui\layout\status_bar.py
+.\_backup\backup_20260120_163822\ui\layout\actions_bar.py
+.\_backup\backup_20260120_163822\ui\layout\log_panel.py
+.\_backup\backup_20260120_163822\ui\services\log_service.py
+.\_backup\backup_20260120_163822\ui\services\thread_service.py
+.\_backup\backup_20260120_163822\core\calculador.py
+.\_backup\backup_20260120_163822\core\cache.py
+.\_backup\backup_20260120_163822\core\utils.py
+.\_backup\backup_20260120_163822\core\coord_validator.py
+.\_backup\backup_20260120_163822\core\persistencia_excel.py
+.\_backup\backup_20260120_163822\core\snapping.py
+.\_backup\backup_20260120_163822\core\coord_diagnostico.py
+.\_backup\backup_20260120_163822\core\preprocessador_coordenadas.py
+.\_backup\backup_20260120_163822\scripts\sanitize.py
+.\_backup\backup_20260120_163822\legacy\20260120_151252\tools\maintenance\maintenance_dashboard.py
+.\_backup\backup_20260120_163822\legacy\20260120_151252\tools\dashboards\maintenance_dashboard.py
+.\_backup\backup_20260120_163822\legacy\20260120_151252\tools\dashboards\tools_dashboard.py
+.\_backup\backup_20260120_163822\legacy\20260120_151252\application\calculo_service.py
+.\_backup\backup_20260120_163822\application\services\calculo_service.py
+.\_backup\backup_20260120_163822\_quarantine\auto_20260120_152602\maintenance_dashboard_window.py
+.\_backup\backup_20260120_163822\admin\base.py
+.\_backup\backup_20260120_163822\admin\registry.py
+.\_backup\backup_20260120_163822\admin\dashboard.py
+.\_backup\backup_20260120_163822\admin\__init__.py
+.\_backup\backup_20260120_163822\admin\dashboard_ctk.py
+.\_backup\backup_20260120_163822\admin\core\__init__.py
+.\_backup\backup_20260120_163822\admin\core\context.py
+.\_backup\backup_20260120_163822\admin\core\scanner.py
+.\_backup\backup_20260120_163822\admin\core\classifier.py
+.\_backup\backup_20260120_163822\.quarantine\teste_consolidacao.py
+.\_backup\backup_20260120_163822\.quarantine\migrar_db.py
+.\_backup\backup_20260120_163822\.quarantine\ui\__init__.py
+.\_backup\backup_20260120_163822\.quarantine\ui\tooltip.py
+.\_backup\backup_20260120_163822\.quarantine\ui\splash.py
+.\_backup\backup_20260120_163822\.quarantine\ui\message_modal.py
+.\_backup\backup_20260120_163822\.quarantine\ui\modelo_excel.py
+.\_backup\backup_20260120_163822\.quarantine\ui\consolidacao_window.py
+.\_backup\backup_20260120_163822\.quarantine\ui\exportador_excel.py
+.\_backup\backup_20260120_163822\.quarantine\ui\consolidacao_mensal_window.py
+.\_backup\backup_20260120_163822\.quarantine\ui\log_mixin.py
+.\_backup\backup_20260120_163822\.quarantine\ui\progress_mixin.py
+.\_backup\backup_20260120_163822\.quarantine\ui\windows_utils.py
+.\_backup\backup_20260120_163822\.quarantine\ui\controllers\configuracoes.py
+.\_backup\backup_20260120_163822\.quarantine\ui\windows\maintenance_window.py
+.\_backup\backup_20260120_163822\.quarantine\ui\componentes\confirm_open_modal.py
+.\_backup\backup_20260120_163822\.quarantine\ui\states\app_states.py
+.\_backup\backup_20260120_163822\.quarantine\ui\adapters\__init__.py
+.\_backup\backup_20260120_163822\.quarantine\ui\adapters\calculo_adapter.py
+.\_backup\backup_20260120_163822\.quarantine\core\__init__.py
+.\_backup\backup_20260120_163822\.quarantine\core\simulador.py
+.\_backup\backup_20260120_163822\.quarantine\core\ors_client.py
+.\_backup\backup_20260120_163822\.quarantine\core\geocoder.py
+.\_backup\backup_20260120_163822\.quarantine\core\error_summary.py
+.\_backup\backup_20260120_163822\.quarantine\core\validacao_coords.py
+.\_backup\backup_20260120_163822\.quarantine\core\fluxo_validacao.py
+.\_backup\backup_20260120_163822\.quarantine\core\geo_stats.py
+.\_backup\backup_20260120_163822\.quarantine\core\heatmap_data.py
+.\_backup\backup_20260120_163822\.quarantine\core\auditoria_log.py
+.\_backup\backup_20260120_163822\.quarantine\core\events.py
+.\_backup\backup_20260120_163822\.quarantine\tests\test_core_basico.py
+.\_backup\backup_20260120_163822\.quarantine\tests\test_core_retry.py
+.\_backup\backup_20260120_163822\.quarantine\tests\test_core_cancelamento.py
+.\_backup\backup_20260120_163822\.quarantine\tests\__init__.py
+.\_backup\backup_20260120_163822\.quarantine\tests\conftest.py
+.\_backup\backup_20260120_163822\.quarantine\tests\integration\test_fluxo_preprocessador.py
+.\_backup\backup_20260120_163822\.quarantine\tests\helpers\assert_logs.py
+.\_backup\backup_20260120_163822\.quarantine\tests\unit\core\test_coord_diagnostico.py
+.\_backup\backup_20260120_163822\.quarantine\tests\unit\core\test_coord_validator.py
+.\_backup\backup_20260120_163822\.quarantine\tests\unit\calculo\test_calculo_bloqueia_erro.py
+.\_backup\backup_20260120_163822\.quarantine\tests\unit\calculo\test_calculo_aceita_alerta.py
+.\_backup\backup_20260120_163822\.quarantine\tests\unit\calculo\test_cancelamento.py
+.\_backup\backup_20260120_163822\.quarantine\scripts\analise_geral.py
+.\_backup\backup_20260120_163822\.quarantine\scripts\scaffold_arquitetura_alvo.py
+.\_backup\backup_20260120_163822\.quarantine\_quarantine\auto_20260120_152602\dashboard_main.py
+.\_backup\backup_20260120_163822\.quarantine\_quarantine\auto_20260120_152602\admin_dashboard_window.py
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\dashboard\__init__.py
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\dashboard\modern_dashboard.py
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\dashboard\log_bus.py
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\dashboard\tool_runner.py
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\dashboards\__init__.py
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\dashboards\admin_dashboard.py
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\application\__init__.py
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\application\events.py
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\application\dto.py
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\application\ports.py
+.\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\application\mapa_service.py
+.\_quarantine\auto_20260120_152602\maintenance_dashboard_window.py
+.\admin\base.py
+.\admin\registry.py
+.\admin\__init__.py
+.\admin\dashboard_ctk.py
+.\admin\sanitize.py
+.\admin\tools\diagnostic_tool.py
+.\admin\tools\quarantine_tool.py
+.\admin\core\__init__.py
+.\admin\core\context.py
+.\admin\core\scanner.py
+.\admin\core\classifier.py
+.\admin\core\route_graph.py
+.\admin\core\risk.py
+.\admin\core\quarantine.py
+.\admin\core\dependency_tree.py
+.\admin\core\heatmap.py
+.\admin\core\risk_score.py
+.\admin\dashboard\dashboard.py
+.\admin\dashboard\views\__init__.py
+.\admin\dashboard\views\overview.py
+.\admin\dashboard\views\routes.py
+.\admin\dashboard\views\logs.py
+.\admin\dashboard\views\actions.py
+.\.quarantine\teste_consolidacao.py
+.\.quarantine\migrar_db.py
+.\.quarantine\ui\__init__.py
+.\.quarantine\ui\tooltip.py
+.\.quarantine\ui\splash.py
+.\.quarantine\ui\message_modal.py
+.\.quarantine\ui\modelo_excel.py
+.\.quarantine\ui\consolidacao_window.py
+.\.quarantine\ui\exportador_excel.py
+.\.quarantine\ui\consolidacao_mensal_window.py
+.\.quarantine\ui\log_mixin.py
+.\.quarantine\ui\progress_mixin.py
+.\.quarantine\ui\windows_utils.py
+.\.quarantine\ui\controllers\configuracoes.py
+.\.quarantine\ui\windows\maintenance_window.py
+.\.quarantine\ui\componentes\confirm_open_modal.py
+.\.quarantine\ui\states\app_states.py
+.\.quarantine\ui\adapters\__init__.py
+.\.quarantine\ui\adapters\calculo_adapter.py
+.\.quarantine\core\__init__.py
+.\.quarantine\core\simulador.py
+.\.quarantine\core\ors_client.py
+.\.quarantine\core\geocoder.py
+.\.quarantine\core\error_summary.py
+.\.quarantine\core\validacao_coords.py
+.\.quarantine\core\fluxo_validacao.py
+.\.quarantine\core\geo_stats.py
+.\.quarantine\core\heatmap_data.py
+.\.quarantine\core\auditoria_log.py
+.\.quarantine\core\events.py
+.\.quarantine\tests\test_core_basico.py
+.\.quarantine\tests\test_core_retry.py
+.\.quarantine\tests\test_core_cancelamento.py
+.\.quarantine\tests\__init__.py
+.\.quarantine\tests\conftest.py
+.\.quarantine\tests\integration\test_fluxo_preprocessador.py
+.\.quarantine\tests\helpers\assert_logs.py
+.\.quarantine\tests\unit\core\test_coord_diagnostico.py
+.\.quarantine\tests\unit\core\test_coord_validator.py
+.\.quarantine\tests\unit\calculo\test_calculo_bloqueia_erro.py
+.\.quarantine\tests\unit\calculo\test_calculo_aceita_alerta.py
+.\.quarantine\tests\unit\calculo\test_cancelamento.py
+.\.quarantine\scripts\analise_geral.py
+.\.quarantine\scripts\scaffold_arquitetura_alvo.py
+.\.quarantine\_quarantine\auto_20260120_152602\dashboard_main.py
+.\.quarantine\_quarantine\auto_20260120_152602\admin_dashboard_window.py
+.\.quarantine\legacy\20260120_151252\tools\dashboard\__init__.py
+.\.quarantine\legacy\20260120_151252\tools\dashboard\modern_dashboard.py
+.\.quarantine\legacy\20260120_151252\tools\dashboard\log_bus.py
+.\.quarantine\legacy\20260120_151252\tools\dashboard\tool_runner.py
+.\.quarantine\legacy\20260120_151252\tools\dashboards\__init__.py
+.\.quarantine\legacy\20260120_151252\tools\dashboards\admin_dashboard.py
+.\.quarantine\legacy\20260120_151252\application\__init__.py
+.\.quarantine\legacy\20260120_151252\application\events.py
+.\.quarantine\legacy\20260120_151252\application\dto.py
+.\.quarantine\legacy\20260120_151252\application\ports.py
+.\.quarantine\legacy\20260120_151252\application\mapa_service.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\bootstrap.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\convert_legacy_tools.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\legacy_backup\run_tests_with_log.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\legacy_backup\fix_test_imports.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\legacy_backup\patch_ui_runtime.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\legacy_backup\apply_all_patches.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\legacy_backup\patch_core_resultados.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\legacy_backup\autofix_engine.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\legacy_backup\rollback.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\legacy_backup\maintenance_engine.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\legacy_backup\run_analysis.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\legacy_backup\patches\patch_progress.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\legacy_backup\analysis\__init__.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\change_engine\__init__.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\change_engine\plan.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\change_engine\step.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\change_engine\checks.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\change_engine\verifiers.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\change_engine\rollback.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\plans\__init__.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\plans\plan_limpeza_tools.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\analyzers\__init__.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\maintenance\__init__.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\engine\__init__.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\impl\databasecleanup.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\impl\toolsanalyzer.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\impl\projectinspector.py
+.\quarentena\.quarantine\legacy\20260120_151252\tools\impl\emergencyfix.py
+.\quarentena\admin\tools\cache_tool.py
+.\quarentena\admin\tools\backup_tool.py
+.\quarentena\admin\tools\structure_check_tool.py
+.\quarentena\admin\tools\quarantine_tool.py
+.\quarentena\admin\tools\diagnostic_tool.py
+.\quarentena\legacy\20260120_151252\tools\legacy_backup\patch_statusbar_layout.py
+.\quarentena\legacy\20260120_151252\tools\legacy_backup\diff_contracts.py
+.\quarentena\legacy\20260120_151252\tools\legacy_backup\diff_behavior.py
+.\quarentena\legacy\20260120_151252\tools\legacy_backup\diff_layout.py
+.\quarentena\legacy\20260120_151252\tools\legacy_backup\patch_registry.py
+.\quarentena\legacy\20260120_151252\tools\legacy_backup\analyze_project.py
+.\quarentena\legacy\20260120_151252\tools\legacy_backup\apply_patches.py
+.\quarentena\legacy\20260120_151252\tools\legacy_backup\analyzer.py
+.\quarentena\legacy\20260120_151252\tools\legacy_backup\patches\patch_statusbar.py
+.\quarentena\legacy\20260120_151252\tools\legacy_backup\patches\patch_core_excel.py
+.\quarentena\legacy\20260120_151252\tools\legacy_backup\analysis\project_analyzer.py
+.\quarentena\legacy\20260120_151252\tools\change_engine\engine.py
+.\quarentena\legacy\20260120_151252\tools\change_engine\registry.py
+.\quarentena\legacy\20260120_151252\tools\maintenance\maintenance_runner.py
+.\quarentena\legacy\20260120_151252\tools\engine\tool_result.py
+.\quarentena\legacy\20260120_151252\tools\engine\base_tool.py
+.\quarentena\legacy\20260120_151252\tools\engine\registry.py
+.\quarentena\legacy\20260120_151252\tools\engine\runner.py
+.\quarentena\legacy\20260120_151252\tools\engine\logger.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\bootstrap.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\convert_legacy_tools.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\legacy_backup\run_tests_with_log.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\legacy_backup\fix_test_imports.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\legacy_backup\patch_ui_runtime.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\legacy_backup\apply_all_patches.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\legacy_backup\patch_core_resultados.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\legacy_backup\autofix_engine.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\legacy_backup\rollback.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\legacy_backup\maintenance_engine.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\legacy_backup\run_analysis.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\legacy_backup\patches\patch_progress.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\legacy_backup\analysis\__init__.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\change_engine\__init__.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\change_engine\plan.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\change_engine\step.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\change_engine\checks.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\change_engine\verifiers.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\change_engine\rollback.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\plans\__init__.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\plans\plan_limpeza_tools.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\analyzers\__init__.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\maintenance\__init__.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\engine\__init__.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\impl\databasecleanup.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\impl\toolsanalyzer.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\impl\projectinspector.py
+.\quarentena\_backup\backup_20260120_163057\.quarantine\legacy\20260120_151252\tools\impl\emergencyfix.py
+.\quarentena\_backup\backup_20260120_163057\admin\tools\cache_tool.py
+.\quarentena\_backup\backup_20260120_163057\admin\tools\backup_tool.py
+.\quarentena\_backup\backup_20260120_163057\admin\tools\structure_check_tool.py
+.\quarentena\_backup\backup_20260120_163057\admin\tools\quarantine_tool.py
+.\quarentena\_backup\backup_20260120_163057\admin\tools\diagnostic_tool.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\legacy_backup\patch_statusbar_layout.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\legacy_backup\diff_contracts.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\legacy_backup\diff_behavior.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\legacy_backup\diff_layout.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\legacy_backup\patch_registry.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\legacy_backup\analyze_project.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\legacy_backup\apply_patches.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\legacy_backup\analyzer.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\legacy_backup\patches\patch_statusbar.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\legacy_backup\patches\patch_core_excel.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\legacy_backup\analysis\project_analyzer.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\change_engine\engine.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\change_engine\registry.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\maintenance\maintenance_runner.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\engine\tool_result.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\engine\base_tool.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\engine\registry.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\engine\runner.py
+.\quarentena\_backup\backup_20260120_163057\legacy\20260120_151252\tools\engine\logger.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\bootstrap.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\convert_legacy_tools.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\legacy_backup\run_tests_with_log.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\legacy_backup\fix_test_imports.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\legacy_backup\patch_ui_runtime.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\legacy_backup\apply_all_patches.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\legacy_backup\patch_core_resultados.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\legacy_backup\autofix_engine.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\legacy_backup\rollback.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\legacy_backup\maintenance_engine.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\legacy_backup\run_analysis.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\legacy_backup\patches\patch_progress.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\legacy_backup\analysis\__init__.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\change_engine\__init__.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\change_engine\plan.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\change_engine\step.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\change_engine\checks.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\change_engine\verifiers.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\change_engine\rollback.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\plans\__init__.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\plans\plan_limpeza_tools.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\analyzers\__init__.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\maintenance\__init__.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\engine\__init__.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\impl\databasecleanup.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\impl\toolsanalyzer.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\impl\projectinspector.py
+.\quarentena\_backup\backup_20260120_163822\.quarantine\legacy\20260120_151252\tools\impl\emergencyfix.py
+.\quarentena\_backup\backup_20260120_163822\admin\tools\cache_tool.py
+.\quarentena\_backup\backup_20260120_163822\admin\tools\backup_tool.py
+.\quarentena\_backup\backup_20260120_163822\admin\tools\structure_check_tool.py
+.\quarentena\_backup\backup_20260120_163822\admin\tools\quarantine_tool.py
+.\quarentena\_backup\backup_20260120_163822\admin\tools\diagnostic_tool.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\legacy_backup\patch_statusbar_layout.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\legacy_backup\diff_contracts.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\legacy_backup\diff_behavior.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\legacy_backup\diff_layout.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\legacy_backup\patch_registry.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\legacy_backup\analyze_project.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\legacy_backup\apply_patches.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\legacy_backup\analyzer.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\legacy_backup\patches\patch_statusbar.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\legacy_backup\patches\patch_core_excel.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\legacy_backup\analysis\project_analyzer.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\change_engine\engine.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\change_engine\registry.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\maintenance\maintenance_runner.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\engine\tool_result.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\engine\base_tool.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\engine\registry.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\engine\runner.py
+.\quarentena\_backup\backup_20260120_163822\legacy\20260120_151252\tools\engine\logger.py
+
+Analise concluida

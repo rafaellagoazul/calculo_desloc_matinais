@@ -1,0 +1,22 @@
+# ui/logo.py
+import tkinter as tk
+from PIL import Image, ImageTk
+import os
+
+
+class Logo(tk.Label):
+    def __init__(self, master, image_path, height=48, bg="#FFFFFF"):
+        if not os.path.exists(image_path):
+            raise FileNotFoundError(f"Logo não encontrado: {image_path}")
+
+        img = Image.open(image_path)
+        ratio = height / img.height
+        img = img.resize((int(img.width * ratio), height))
+
+        self.photo = ImageTk.PhotoImage(img)
+
+        super().__init__(
+            master,
+            image=self.photo,
+            bg=bg
+        )

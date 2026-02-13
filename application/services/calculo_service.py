@@ -1,0 +1,5 @@
+
+from core.calculador import CalculadorDeslocamentos
+class CalculoService:
+    def executar(self, *args, **kwargs):
+        return CalculadorDeslocamentos(*args, **kwargs).calcular()

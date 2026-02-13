@@ -1,0 +1,27 @@
+import customtkinter as ctk
+
+class ModalBase(ctk.CTkToplevel):
+
+    def __init__(self, parent, titulo="Modal", width=600, height=400):
+        super().__init__(parent)
+
+        self.title(titulo)
+        self.geometry(f"{width}x{height}")
+        self.resizable(False, False)
+
+        # Mantém modal sobre a janela principal
+        self.transient(parent)
+        self.grab_set()
+
+        # Centraliza
+        self.update_idletasks()
+        x = parent.winfo_x() + (parent.winfo_width() // 2) - (width // 2)
+        y = parent.winfo_y() + (parent.winfo_height() // 2) - (height // 2)
+        self.geometry(f"+{x}+{y}")
+
+        # Container padrão
+        self.container = ctk.CTkFrame(self)
+        self.container.pack(fill="both", expand=True, padx=20, pady=20)
+
+        # Fecha corretamente
+        self.protocol("WM_DELETE_WINDOW", self.destroy)

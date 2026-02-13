@@ -1,0 +1,93 @@
+# REMOVIDO: import requests
+# REMOVIDO: from typing import Optional, Tuple
+
+
+# REMOVIDO: from typing import Tuple
+ORS_NEAREST_URL = "https://api.openrouteservice.org/v2/nearest/driving-car"
+
+
+def snap_para_rua(
+    lat: float,
+    lon: float,
+    api_key: str,
+    raio: int = 50
+) -> Optional[Tuple[float, float]]:
+    """
+    Ajusta coordenada para a rua mais próxima usando ORS Nearest.
+
+    Retorna (lat, lon) ou None se não conseguir.
+    """
+
+    headers = {
+        "Authorization": api_key,
+        "Content-Type": "application/json"
+    }
+
+    payload = {
+        "coordinates": [[lon, lat]],
+        "radius": raio
+    }
+
+    try:
+        resp = requests.post(
+            ORS_NEAREST_URL,
+            json=payload,
+            headers=headers,
+            timeout=10
+        )
+        resp.raise_for_status()
+        data = resp.json()
+
+        coords = data["features"][0]["geometry"]["coordinates"]
+        lon_corr, lat_corr = coords
+
+        return lat_corr, lon_corr
+
+    except Exception:
+        return None
+# REMOVIDO: import requests
+# REMOVIDO: from typing import Optional, Tuple
+
+
+ORS_NEAREST_URL = "https://api.openrouteservice.org/v2/nearest/driving-car"
+
+
+def snap_para_rua(
+    lat: float,
+    lon: float,
+    api_key: str,
+    raio: int = 50
+) -> Optional[Tuple[float, float]]:
+    """
+    Ajusta coordenada para a rua mais próxima usando ORS Nearest.
+
+    Retorna (lat, lon) ou None se não conseguir.
+    """
+
+    headers = {
+        "Authorization": api_key,
+        "Content-Type": "application/json"
+    }
+
+    payload = {
+        "coordinates": [[lon, lat]],
+        "radius": raio
+    }
+
+    try:
+        resp = requests.post(
+            ORS_NEAREST_URL,
+            json=payload,
+            headers=headers,
+            timeout=10
+        )
+        resp.raise_for_status()
+        data = resp.json()
+
+        coords = data["features"][0]["geometry"]["coordinates"]
+        lon_corr, lat_corr = coords
+
+        return lat_corr, lon_corr
+
+    except Exception:
+        return None

@@ -1,0 +1,382 @@
+# history_window.py
+import os
+import subprocess
+import customtkinter as ctk
+from tkinter import ttk, filedialog
+
+from openpyxl import Workbook
+from openpyxl.styles import Font, Alignment
+from openpyxl.utils import get_column_letter
+
+from ui.modal_base import ModalBase
+from ui.export_success_modal import ExportSuccessModal
+from ui.componentes.alert_modal import AlertModal
+
+from ui.stores.history_store import listar_execucoes
+
+from ui.deslocamentos_queries import (
+    listar_periodos,
+    listar_arquivos,
+    listar_vendedores,
+    resumo_por_vendedor,
+    exportar_dados
+)
+
+
+class HistoryWindow(ModalBase):
+
+    def __init__(self, parent):
+        super().__init__(
+            parent,
+            titulo="Histórico e Consolidações",
+            width=1000,
+            height=600
+        )
+
+        self.filtro_periodo = None
+        self.filtro_arquivo = None
+        self.filtro_vendedor = None
+
+        self._setup_style()
+        self._criar_layout()
+        self._carregar_execucoes()
+        self._carregar_consolidacao()
+
+    # ─────────────────────────────────────────────
+    # ESTILO / TEMA
+    # ─────────────────────────────────────────────
+    def _setup_style(self):
+        modo = ctk.get_appearance_mode()
+
+        if modo == "Dark":
+            self.bg = "#1e1e1e"
+            self.header = "#2b2b2b"
+            self.text = "#e6e6e6"
+        else:
+            self.bg = "#ffffff"
+            self.header = "#e0e0e0"
+            self.text = "#111111"
+
+        style = ttk.Style()
+        style.theme_use("default")
+
+        style.configure(
+            "Treeview",
+            background=self.bg,
+            fieldbackground=self.bg,
+            foreground=self.text,
+            rowheight=28,
+            font=("Segoe UI", 10),
+            borderwidth=0
+        )
+
+        style.configure(
+            "Treeview.Heading",
+            background=self.header,
+            foreground=self.text,
+            font=("Segoe UI", 10, "bold")
+        )
+
+        style.map(
+            "Treeview",
+            background=[("selected", "#0d6efd")],
+            foreground=[("selected", "#ffffff")]
+        )
+
+        style.configure(
+            "TNotebook",
+            background=self.bg,
+            borderwidth=0
+        )
+
+        style.configure(
+            "TNotebook.Tab",
+            background=self.header,
+            foreground=self.text,
+            padding=[12, 6]
+        )
+
+        style.map(
+            "TNotebook.Tab",
+            background=[("selected", "#0d6efd")],
+            foreground=[("selected", "#ffffff")]
+        )
+
+    # ─────────────────────────────────────────────
+    # UTIL
+    # ─────────────────────────────────────────────
+    def _safe_values(self, valores):
+        resultado = []
+
+        for v in valores:
+            if v is None:
+                continue
+
+            if isinstance(v, (tuple, list)):
+                v = v[0]
+
+            if v != "":
+                resultado.append(str(v))
+
+        return resultado
+
+    # ─────────────────────────────────────────────
+    # LAYOUT
+    # ─────────────────────────────────────────────
+    def _criar_layout(self):
+        wrapper = ctk.CTkFrame(self.container, fg_color="transparent")
+        wrapper.pack(fill="both", expand=True, padx=10, pady=10)
+
+        # FILTROS
+        filtros = ctk.CTkFrame(wrapper, fg_color="transparent")
+        filtros.pack(fill="x", pady=(0, 10))
+
+        periodos = sorted(self._safe_values(listar_periodos()))
+        arquivos = sorted(self._safe_values(listar_arquivos()), key=str.casefold)
+        vendedores = sorted(self._safe_values(listar_vendedores()), key=str.casefold)
+
+        self.cb_periodo = ctk.CTkComboBox(
+            filtros,
+            values=["Todos"] + periodos,
+            width=140,
+            command=self._on_filtrar
+        )
+        self.cb_periodo.set("Todos")
+        self.cb_periodo.pack(side="left", padx=(0, 8))
+
+        self.cb_arquivo = ctk.CTkComboBox(
+            filtros,
+            values=["Todos"] + arquivos,
+            width=220,
+            command=self._on_filtrar
+        )
+        self.cb_arquivo.set("Todos")
+        self.cb_arquivo.pack(side="left", padx=(0, 8))
+
+        self.cb_vendedor = ctk.CTkComboBox(
+            filtros,
+            values=["Todos"] + vendedores,
+            width=160,
+            command=self._on_filtrar
+        )
+        self.cb_vendedor.set("Todos")
+        self.cb_vendedor.pack(side="left", padx=(0, 12))
+
+        ctk.CTkButton(
+            filtros,
+            text="📤 Exportar",
+            width=140,
+            command=self._exportar
+        ).pack(side="right")
+
+        # ABAS
+        self.tabs = ttk.Notebook(wrapper)
+        self.tabs.pack(fill="both", expand=True)
+
+        self.tab_exec = ctk.CTkFrame(self.tabs)
+        self.tab_cons = ctk.CTkFrame(self.tabs)
+
+        self.tabs.add(self.tab_exec, text="Execuções")
+        self.tabs.add(self.tab_cons, text="Consolidação")
+
+        self._criar_tab_execucoes()
+        self._criar_tab_consolidacao()
+
+    # ─────────────────────────────────────────────
+    # ABA EXECUÇÕES
+    # ─────────────────────────────────────────────
+    def _criar_tab_execucoes(self):
+        cols = ("arquivo", "registros", "tempo", "status", "data")
+
+        self.tree_exec = ttk.Treeview(
+            self.tab_exec,
+            columns=cols,
+            show="headings"
+        )
+
+        headers = ["Arquivo", "Registros", "Tempo (s)", "Status", "Data"]
+        for col, h in zip(cols, headers):
+            self.tree_exec.heading(col, text=h)
+            self.tree_exec.column(col, anchor="center")
+
+        self.tree_exec.column("arquivo", anchor="w", width=360)
+
+        self.tree_exec.pack(fill="both", expand=True, padx=8, pady=8)
+        self.tree_exec.bind("<Double-1>", self._abrir_arquivo)
+
+    # ─────────────────────────────────────────────
+    # ABA CONSOLIDAÇÃO
+    # ─────────────────────────────────────────────
+    def _criar_tab_consolidacao(self):
+        self.tree_cons = ttk.Treeview(
+            self.tab_cons,
+            columns=("vendedor", "registros", "economia"),
+            show="headings"
+        )
+
+        self.tree_cons.heading("vendedor", text="Vendedor")
+        self.tree_cons.heading("registros", text="Registros")
+        self.tree_cons.heading("economia", text="Economia Total")
+
+        self.tree_cons.column("economia", anchor="e")
+
+        self.tree_cons.pack(fill="both", expand=True, padx=8, pady=8)
+
+    # ─────────────────────────────────────────────
+    # DADOS
+    # ─────────────────────────────────────────────
+    def _carregar_execucoes(self):
+        self.tree_exec.delete(*self.tree_exec.get_children())
+
+        for row in listar_execucoes():
+            self.tree_exec.insert("", "end", values=row)
+
+    def _carregar_consolidacao(self):
+        self.tree_cons.delete(*self.tree_cons.get_children())
+
+        dados = resumo_por_vendedor(
+            periodo=self.filtro_periodo,
+            arquivo=self.filtro_arquivo,
+            vendedor=self.filtro_vendedor
+        )
+
+        for vend, total, economia in dados:
+            self.tree_cons.insert("", "end", values=(vend, total, economia))
+
+    # ─────────────────────────────────────────────
+    # FILTROS
+    # ─────────────────────────────────────────────
+    def _on_filtrar(self, _=None):
+        self.filtro_periodo = (
+            None if self.cb_periodo.get() == "Todos" else self.cb_periodo.get()
+        )
+        self.filtro_arquivo = (
+            None if self.cb_arquivo.get() == "Todos" else self.cb_arquivo.get()
+        )
+        self.filtro_vendedor = (
+            None if self.cb_vendedor.get() == "Todos" else self.cb_vendedor.get()
+        )
+
+        self._carregar_consolidacao()
+
+    # ─────────────────────────────────────────────
+    # AÇÕES
+    # ─────────────────────────────────────────────
+    def _abrir_arquivo(self, _):
+        sel = self.tree_exec.selection()
+        if not sel:
+            return
+
+        arquivo = self.tree_exec.item(sel[0])["values"][0]
+
+        if os.path.exists(arquivo):
+            subprocess.Popen(["start", arquivo], shell=True)
+        else:
+            AlertModal(
+                self,
+                "Arquivo não encontrado",
+                "O arquivo não existe mais.",
+                "warning"
+            )
+
+    def _exportar(self):
+        dados = exportar_dados(
+            periodo=self.filtro_periodo,
+            arquivo=self.filtro_arquivo,
+            vendedor=self.filtro_vendedor
+        )
+
+        if not dados:
+            AlertModal(self, "Exportar", "Nenhum dado encontrado.", "info")
+            return
+
+        path = filedialog.asksaveasfilename(
+            defaultextension=".xlsx",
+            filetypes=[("Excel", "*.xlsx")]
+        )
+
+        if not path:
+            return
+
+        wb = Workbook()
+        ws = wb.active
+        ws.title = "Deslocamentos"
+
+        # ─────────────────────────────────────────────
+        # CABEÇALHO (IGUAL AO CORE)
+        # ─────────────────────────────────────────────
+        headers = [
+            "SV",
+            "DIA",
+            "COD VENDEDOR",
+            "COD CLIENTE",
+            "CASA VEND",
+            "DISTRIBUIDOR",
+            "1º CLIENTE",
+            "CASA→DIST→CLI",
+            "CASA→CLI",
+            "DIFERENÇA"
+        ]
+
+        ws.append(headers)
+
+        header_font = Font(bold=True)
+        center = Alignment(horizontal="center", vertical="center")
+
+        for col in range(1, len(headers) + 1):
+            cell = ws.cell(row=1, column=col)
+            cell.font = header_font
+            cell.alignment = center
+
+        # ─────────────────────────────────────────────
+        # DADOS
+        # ─────────────────────────────────────────────
+        for r in dados:
+            ws.append([
+                r["sv"],
+                r["dia"],
+                r["cod_vendedor"],
+                r["cod_cliente"],
+                r["casa_vend"],
+                r["distribuidor"],
+                r["primeiro_cliente"],
+                r["dist_casa_dist_cli"],
+                r["dist_casa_cli"],
+                r["diferenca"]
+            ])
+
+        # ─────────────────────────────────────────────
+        # FORMATAÇÃO DE COLUNAS
+        # ─────────────────────────────────────────────
+        col_widths = {
+            1: 8,    # SV
+            2: 12,   # DIA
+            3: 16,   # COD VENDEDOR
+            4: 16,   # COD CLIENTE
+            5: 14,   # CASA VEND
+            6: 18,   # DISTRIBUIDOR
+            7: 16,   # 1º CLIENTE
+            8: 18,   # CASA→DIST→CLI
+            9: 14,   # CASA→CLI
+            10: 14   # DIFERENÇA
+        }
+
+        for col_idx, width in col_widths.items():
+            ws.column_dimensions[get_column_letter(col_idx)].width = width
+
+        # ─────────────────────────────────────────────
+        # FORMATO NUMÉRICO
+        # ─────────────────────────────────────────────
+        for row in ws.iter_rows(min_row=2):
+            row[7].number_format = "#,##0.00"   # CASA→DIST→CLI
+            row[8].number_format = "#,##0.00"   # CASA→CLI
+            row[9].number_format = "#,##0.00"   # DIFERENÇA
+
+        # ─────────────────────────────────────────────
+        # FREEZE + FILTRO
+        # ─────────────────────────────────────────────
+        ws.freeze_panes = "A2"
+        ws.auto_filter.ref = f"A1:{get_column_letter(len(headers))}{ws.max_row}"
+
+        wb.save(path)
+        ExportSuccessModal(self, path)

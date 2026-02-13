@@ -1,0 +1,245 @@
+# REMOVIDO: import threading
+# REMOVIDO: import time
+
+
+# REMOVIDO: from core.calculador import CalculadorDeslocamentos
+# REMOVIDO: from core.persistencia_excel import aplicar_correcoes_excel
+
+from ui.map_preview_modal import abrir_mapa_validacao
+from ui.componentes.alert_modal import AlertModal
+from ui.stores.deslocamentos_store import inserir_registros
+from ui.stores.history_store import registrar_execucao
+
+
+# REMOVIDO: from pathlib import Path
+# REMOVIDO: import pandas as pd
+class AppController:
+    def __init__(self, app):
+        self.app = app
+        self.thread = None
+
+        # 🎯 Falhas estruturadas
+        self.falhas: list[dict] = []
+
+    # ======================================================
+    # PROCESSAMENTO NORMAL
+    # ======================================================
+    def iniciar_processamento(self, gerar_excel: bool = True):
+        if not self.app.arquivo_excel:
+            AlertModal(
+                self.app,
+                "Aviso",
+                "Selecione um arquivo Excel.",
+                "warning"
+            )
+            return
+
+        self.falhas.clear()
+        self.app.cancel_event.clear()
+
+        self._ui(self.app.estado_iniciando)
+        self._ui(lambda: self.app.log("▶ Iniciando processamento"))
+
+        self.thread = threading.Thread(
+            target=lambda: self.app.thread_service.run_safe(
+                self._processar_thread,
+                on_error=lambda e: self._erro(e, "Processamento")
+            ),
+            daemon=True
+        )
+        self.thread.start()
+
+    def _processar_thread(self):
+        try:
+            self._ui(self.app.estado_processando)
+            inicio = time.time()
+
+            calc = self._criar_calculador(
+                self.app.arquivo_excel,
+                salvar_excel=True
+            )
+
+            resultados = calc.calcular()
+
+            # 💾 Banco
+            inserir_registros(resultados, self.app.arquivo_excel.name)
+
+            # 📄 Excel (_resultados.xlsx)
+            if resultados:
+                aplicar_correcoes_excel(
+                    self.app.arquivo_excel,
+                    resultados
+                )
+
+            registrar_execucao(
+                arquivo=self.app.arquivo_excel.name,
+                registros=len(resultados),
+                tempo=time.time() - inicio,
+                status="OK" if resultados else "SEM RESULTADOS"
+            )
+
+            self._ui(self._finalizar)
+
+        except Exception as e:
+            self._erro(e, "Processamento")
+
+    # ======================================================
+    # 🔁 REPROCESSAR SOMENTE AS FALHAS
+    # ======================================================
+    def reprocessar_falhas(self):
+        if not self.falhas:
+            AlertModal(
+                self.app,
+                "Info",
+                "Não há falhas para reprocessar.",
+                "info"
+            )
+            return
+
+        self.app.cancel_event.clear()
+        self._ui(lambda: self.app.log("🔁 Reprocessando apenas falhas..."))
+
+        threading.Thread(
+            target=lambda: self.app.thread_service.run_safe(
+                self._reprocessar_falhas_thread,
+                on_error=lambda e: self._erro(e, "Reprocessamento")
+            ),
+            daemon=True
+        ).start()
+
+    def _reprocessar_falhas_thread(self):
+        try:
+            self._ui(self.app.estado_processando)
+            inicio = time.time()
+
+            linhas = {f["linha"] for f in self.falhas}
+
+            df = pd.read_excel(self.app.arquivo_excel)
+            df_filtrado = df.iloc[[l - 2 for l in linhas]]
+
+            temp_excel = Path(".tmp_reprocessar_falhas.xlsx")
+            df_filtrado.to_excel(temp_excel, index=False)
+
+            falhas_antes = len(self.falhas)
+            self.falhas.clear()
+
+            calc = self._criar_calculador(temp_excel)
+            resultados = calc.calcular()
+
+            inserir_registros(resultados, self.app.arquivo_excel.name)
+
+            resolvidas = falhas_antes - len(self.falhas)
+
+            self._ui(lambda: self.app.log(
+                f"✅ Falhas resolvidas: {resolvidas}"
+            ))
+
+            registrar_execucao(
+                arquivo=self.app.arquivo_excel.name,
+                registros=len(resultados),
+                tempo=time.time() - inicio,
+                status="REPROCESSO"
+            )
+
+            if temp_excel.exists():
+                temp_excel.unlink()
+
+            self._ui(self._finalizar)
+
+        except Exception as e:
+            self._erro(e, "Reprocessamento")
+
+    # ======================================================
+    # 🗺️ MAPA ÚNICO DE FALHAS
+    # ======================================================
+    def abrir_mapa_falhas(self):
+        if not self.falhas:
+            AlertModal(
+                self.app,
+                "Info",
+                "Nenhuma falha para exibir.",
+                "info"
+            )
+            return
+
+        abrir_mapa_validacao(self.falhas)
+
+    # ======================================================
+    # CALCULADOR
+    # ======================================================
+    def _criar_calculador(self, arquivo_excel, salvar_excel: bool = False):
+        ors_key = self.app.cfg.get("ors_api_key")
+
+        if not ors_key:
+            raise RuntimeError(
+                "Chave ORS não configurada. Verifique as configurações do sistema."
+            )
+
+        calc = CalculadorDeslocamentos(
+            arquivo_excel=arquivo_excel,
+            ors_api_key=ors_key,
+            tentativas_extras=self.app.cfg["tentativas_extras"],
+            tempo_espera=self.app.cfg["tempo_espera"],
+            percentual_adicional=self.app.cfg["percentual_adicional"],
+            cancel_event=self.app.cancel_event,
+            salvar_excel=salvar_excel,
+        )
+
+        # 🔗 CORE → UI
+        calc.on_log = lambda msg: self._ui(lambda: self.app.log(msg))
+        calc.on_progress = self._atualizar_progresso
+        calc.on_fail = self._registrar_falha
+
+        return calc
+
+    # ======================================================
+    # FALHAS
+    # ======================================================
+    def _registrar_falha(self, linha, origem, destino, motivo):
+        falha = {
+            "linha": linha,
+            "origem": origem,
+            "destino": destino,
+            "motivo": motivo,
+        }
+
+        self.falhas.append(falha)
+
+        self._ui(lambda: self.app.log(
+            f"❌ Linha {linha}: {origem} → {destino} | {motivo}"
+        ))
+
+    # ======================================================
+    # UI HELPERS
+    # ======================================================
+    def _ui(self, fn):
+        self.app.after(0, fn)
+
+    def _atualizar_progresso(self, atual, total):
+        if total > 0:
+            self._ui(
+                lambda: self.app.progresso_percentual(atual, total)
+            )
+
+    def _finalizar(self):
+        self._ui(self.app.estado_sucesso)
+        self._ui(lambda: self.app.log("🏁 Processamento finalizado"))
+
+        if self.falhas:
+            self._ui(self._perguntar_abrir_mapa)
+
+    def _perguntar_abrir_mapa(self):
+        AlertModal(
+            self.app,
+            "Falhas encontradas",
+            f"Foram encontradas {len(self.falhas)} falhas.\n\n"
+            "Deseja abrir o mapa para conferência?",
+            tipo="question",
+            on_confirm=lambda: abrir_mapa_validacao(self.falhas),
+            confirm_text="Abrir mapa",
+            cancel_text="Agora não"
+        )
+
+    def _erro(self, exc: Exception, contexto: str):
+        self._ui(lambda: self.app.reportar_erro(exc, contexto))
+        self._ui(self.app.estado_erro)

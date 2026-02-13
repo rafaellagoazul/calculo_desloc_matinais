@@ -1,0 +1,5 @@
+# REMOVIDO: import hashlib
+
+def gerar_hash_registro(cod_vendedor, dia, dist_casa_cli, dist_casa_dist_cli):
+    base = f"{cod_vendedor}|{dia}|{dist_casa_cli}|{dist_casa_dist_cli}"
+    return hashlib.sha256(base.encode("utf-8")).hexdigest()

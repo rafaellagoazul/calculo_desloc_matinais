@@ -1,0 +1,298 @@
+from pathlib import Path
+# map_preview_modal.py
+import json
+import tempfile
+import webview
+
+
+HTML = """
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Validação de Coordenadas</title>
+
+<link rel="stylesheet"
+ href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<style>
+html, body {
+  margin:0;
+  height:100%;
+  font-family: Arial;
+}
+#map { height:100%; }
+
+.panel {
+  position:absolute;
+  top:10px;
+  right:10px;
+  width:320px;
+  background:#fff;
+  padding:10px;
+  border-radius:8px;
+  box-shadow:0 0 10px rgba(0,0,0,.3);
+  font-size:13px;
+  z-index:1000;
+}
+
+input, button {
+  width:100%;
+  margin:4px 0;
+  padding:6px;
+}
+
+.badge {
+  display:inline-block;
+  padding:2px 6px;
+  border-radius:4px;
+  color:#fff;
+  font-size:11px;
+}
+
+.badge.erro { background:#e74c3c; }
+.badge.alerta { background:#f1c40f; color:#000; }
+
+.resumo {
+  font-size:12px;
+  margin-bottom:6px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="map"></div>
+
+<div class="panel">
+  <div class="resumo" id="resumo"></div>
+
+  <b>Buscar endereço</b>
+  <input id="busca" placeholder="Rua, cidade..."/>
+  <button onclick="buscar()">🔎 Buscar</button>
+
+  <hr>
+
+  <button onclick="confirmar()">✅ Confirmar correções</button>
+  <button onclick="cancelar()">❌ Cancelar</button>
+</div>
+
+<script>
+const pontos = __PONTOS__;
+
+// ─── ÍCONES ─────────────────────────────
+const iconErro = L.icon({
+  iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/red.png',
+  iconSize: [32, 32],
+  iconAnchor: [16, 32]
+});
+
+const iconAlerta = L.icon({
+  iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/yellow.png',
+  iconSize: [32, 32],
+  iconAnchor: [16, 32]
+});
+
+// ─── MAPA ───────────────────────────────
+const map = L.map('map');
+
+L.tileLayer(
+  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  { maxZoom: 19 }
+).addTo(map);
+
+const bounds = [];
+
+// ─── POPUP ──────────────────────────────
+function popupHtml(p) {
+  return `
+    <b>Linha ${p.linha}</b><br>
+    <b>${p.campo}</b><br>
+    <span class="badge ${p.nivel}">${p.motivo}</span><br><br>
+
+    <i>Valor original:</i><br>
+    <code>${p.raw ?? ""}</code><br><br>
+
+    Latitude:<br>
+    <input id="lat_${p.id}" value="${p.lat ?? ""}"><br>
+    Longitude:<br>
+    <input id="lon_${p.id}" value="${p.lon ?? ""}"><br>
+
+    <button onclick="aplicar(${p.id})">✏️ Aplicar</button>
+    <button onclick="snap(${p.id})">📍 Snap rua</button>
+  `;
+}
+
+// ─── MARKERS ────────────────────────────
+pontos.forEach((p, idx) => {
+  p.id = idx;
+
+  // ❗ NÃO cria marker se não houver coordenada
+  if (p.lat === null || p.lon === null) return;
+
+  const icon = p.nivel === "erro" ? iconErro : iconAlerta;
+
+  const marker = L.marker([p.lat, p.lon], {
+    draggable: true,
+    icon: icon
+  }).addTo(map);
+
+  marker.bindPopup(() => popupHtml(p));
+
+  marker.on("dragend", () => {
+    const ll = marker.getLatLng();
+    p.lat = ll.lat;
+    p.lon = ll.lng;
+  });
+
+  p._marker = marker;
+  bounds.push([p.lat, p.lon]);
+});
+
+// ─── ZOOM INICIAL INTELIGENTE ────────────
+if (bounds.length) {
+  map.fitBounds(bounds, { padding:[60,60] });
+} else {
+  map.setView([-15, -55], 4);
+}
+
+// ─── RESUMO ─────────────────────────────
+function atualizarResumo() {
+  const erros = pontos.filter(p => p.nivel === "erro").length;
+  const alertas = pontos.filter(p => p.nivel === "alerta").length;
+
+  document.getElementById("resumo").innerHTML =
+    `🔴 Erros: <b>${erros}</b><br>` +
+    `🟡 Alertas: <b>${alertas}</b>`;
+}
+atualizarResumo();
+
+// ─── AÇÕES ──────────────────────────────
+window.aplicar = function(id) {
+  const p = pontos.find(x => x.id === id);
+  const lat = parseFloat(document.getElementById("lat_"+id).value);
+  const lon = parseFloat(document.getElementById("lon_"+id).value);
+
+  if (isNaN(lat) || isNaN(lon)) {
+    alert("Coordenadas inválidas");
+    return;
+  }
+
+  p.lat = lat;
+  p.lon = lon;
+
+  if (p._marker) {
+    p._marker.setLatLng([lat, lon]);
+  } else {
+    location.reload();
+  }
+};
+
+window.buscar = async function() {
+  const q = document.getElementById("busca").value;
+  if (!q) return;
+
+  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}`;
+  const res = await fetch(url);
+  const data = await res.json();
+
+  if (!data.length) {
+    alert("Endereço não encontrado");
+    return;
+  }
+
+  map.setView([data[0].lat, data[0].lon], 17);
+};
+
+window.snap = async function(id) {
+  const p = pontos.find(x => x.id === id);
+  if (p.lat === null || p.lon === null) return;
+
+  const url = `https://router.project-osrm.org/nearest/v1/driving/${p.lon},${p.lat}`;
+  const res = await fetch(url);
+  const data = await res.json();
+
+  if (!data.waypoints || !data.waypoints.length) {
+    alert("Snap não encontrado");
+    return;
+  }
+
+  const loc = data.waypoints[0].location;
+  p.lon = loc[0];
+  p.lat = loc[1];
+  p._marker.setLatLng([p.lat, p.lon]);
+};
+
+// ─── CONFIRMAÇÃO ────────────────────────
+function confirmar() {
+  const saida = pontos.map(p => ({
+    linha: p.linha,
+    campo: p.campo,
+    lat: p.lat,
+    lon: p.lon
+  }));
+  window.pywebview.api.confirmar(saida);
+}
+
+function cancelar() {
+  window.pywebview.api.cancelar();
+}
+</script>
+
+</body>
+</html>
+"""
+
+
+# ───────────────────────── PYTHON API ─────────────────────────
+class Api:
+    def __init__(self):
+        self.confirmado = False
+        self.resultado = None
+
+    def confirmar(self, pontos):
+        self.confirmado = True
+        self.resultado = pontos
+        webview.destroy_window()
+
+    def cancelar(self):
+        self.confirmado = False
+        webview.destroy_window()
+
+
+def abrir_mapa_validacao(pontos: list[dict]):
+    """
+    Abre mapa para correção de coordenadas diagnosticadas.
+    Retorna lista corrigida ou None se cancelado.
+    """
+    if not pontos:
+        return []
+
+    api = Api()
+    html = HTML.replace("__PONTOS__", json.dumps(pontos))
+
+    with tempfile.NamedTemporaryFile(
+        delete=False,
+        suffix=".html",
+        encoding="utf-8",
+        mode="w"
+    ) as f:
+        f.write(html)
+        caminho = Path(f.name)
+
+    webview.create_window(
+        "Validação de Coordenadas",
+        caminho.as_uri(),
+        js_api=api,
+        width=1250,
+        height=740
+    )
+
+    webview.start()
+
+    if not api.confirmado:
+        return None
+
+    return api.resultado

@@ -1,0 +1,108 @@
+import customtkinter as ctk
+import threading
+import os
+from pathlib import Path
+from tkinter import filedialog
+
+from tools.backup.backup_manager import criar_backup, restaurar_modo_seguro
+from tools.backup.backup_registry import listar_backups
+from tools.backup.backup_config import save_config
+
+
+# ======================================================
+# FUNÇÃO DE MONTAGEM (O HUB CHAMA ISSO)
+# ======================================================
+def mount_backup_ui(parent):
+    project_root = Path.cwd()
+    ui = BackupManagerUI(parent, project_root)
+    ui.pack(fill="both", expand=True)
+    return ui
+
+
+# ======================================================
+# UI
+# ======================================================
+class BackupManagerUI(ctk.CTkFrame):
+
+    def __init__(self, master, project_root: Path):
+        super().__init__(master)
+        self.project_root = project_root
+
+        self._build_ui()
+        self._load_backups()
+
+    def _build_ui(self):
+        top = ctk.CTkFrame(self)
+        top.pack(fill="x", pady=5)
+
+        ctk.CTkButton(top, text="Criar Backup", command=self._start_backup).pack(side="left", padx=5)
+        ctk.CTkButton(top, text="Configurar Pasta", command=self._config_pasta).pack(side="left", padx=5)
+
+        self.progress = ctk.CTkProgressBar(self)
+        self.progress.pack(fill="x", padx=10, pady=5)
+        self.progress.set(0)
+
+        self.status_label = ctk.CTkLabel(self, text="")
+        self.status_label.pack(anchor="w", padx=10)
+
+        self.scroll = ctk.CTkScrollableFrame(self)
+        self.scroll.pack(fill="both", expand=True, padx=10, pady=10)
+
+    def _start_backup(self):
+        self.progress.set(0)
+        self.status_label.configure(text="")
+
+        def run():
+            criar_backup(
+                self.project_root,
+                progress_cb=lambda c, t, n: self.after(
+                    0, self._on_progress, c, t, n
+                )
+            )
+            self.after(0, self._load_backups)
+
+        threading.Thread(target=run, daemon=True).start()
+
+    def _on_progress(self, current, total, name):
+        self.progress.set(current / total)
+        self.status_label.configure(text=name)
+
+    def _load_backups(self):
+        for w in self.scroll.winfo_children():
+            w.destroy()
+
+        for backup in listar_backups():
+            self._add_backup_card(backup)
+
+    def _add_backup_card(self, backup: dict):
+        card = ctk.CTkFrame(self.scroll)
+        card.pack(fill="x", pady=4)
+
+        tamanho = backup.get("tamanho")
+        if tamanho is None:
+            tamanho_txt = ""
+        else:
+            tamanho_txt = f" — {tamanho:.2f} MB"
+
+        txt = f"{backup['data'].strftime('%d/%m/%Y %H:%M')}{tamanho_txt}"
+
+        ctk.CTkLabel(card, text=txt).pack(side="left", padx=5)
+
+        ctk.CTkButton(
+            card,
+            text="Restaurar",
+            width=100,
+            command=lambda p=backup["path"]: self._restaurar(p)
+        ).pack(side="right", padx=5)
+
+
+    def _restaurar(self, path: Path):
+        pasta = restaurar_modo_seguro(path)
+        os.startfile(pasta)
+
+    # ---------- CONFIG ----------
+    def _config_pasta(self):
+        pasta = filedialog.askdirectory()
+        if pasta:
+            save_config({"backup_dir": pasta})
+            self._load_backups()

@@ -1,0 +1,92 @@
+# core/preprocessador_coordenadas.py
+from pathlib import Path
+import pandas as pd
+
+from core.coord_diagnostico import diagnosticar_coordenada
+from ui.map_preview_modal import abrir_mapa_validacao
+
+
+class PreProcessadorCoordenadas:
+    def __init__(self, arquivo_excel: Path, on_log=None):
+        self.arquivo_excel = Path(arquivo_excel)
+        self.on_log = on_log or (lambda msg: None)
+
+    # ======================================================
+    def processar(self) -> pd.DataFrame:
+        """
+        Retorna um DataFrame com coordenadas validadas
+        ou lança exceção se o usuário cancelar.
+        """
+        self.on_log("🔎 Iniciando diagnóstico de coordenadas")
+
+        df = pd.read_excel(self.arquivo_excel)
+
+        problemas = []
+        linhas_ok = []
+
+        for idx, row in df.iterrows():
+            linha_excel = idx + 2
+
+            diag_casa = diagnosticar_coordenada(row["CASA VEND"], "CASA VEND")
+            diag_dist = diagnosticar_coordenada(row["DISTRIBUIDOR"], "DISTRIBUIDOR")
+            diag_cli  = diagnosticar_coordenada(row["1ºCLIENTE"], "1ºCLIENTE")
+
+            diags = [
+                ("CASA VEND", diag_casa),
+                ("DISTRIBUIDOR", diag_dist),
+                ("1ºCLIENTE", diag_cli),
+            ]
+
+            linha_tem_erro = False
+
+            for campo, d in diags:
+                if d["nivel"] in ("erro", "alerta"):
+                    problemas.append({
+                        "linha": linha_excel,
+                        "campo": campo,
+                        "raw": d["raw"],
+                        "lat": d["lat"],
+                        "lon": d["lon"],
+                        "nivel": d["nivel"],
+                        "motivo": d["motivo"],
+                    })
+
+                    if d["nivel"] == "erro":
+                        linha_tem_erro = True
+
+            if not linha_tem_erro:
+                linhas_ok.append(idx)
+
+        # ─────────────────────────────
+        # Se não há problemas → segue direto
+        # ─────────────────────────────
+        if not problemas:
+            self.on_log("✔ Nenhum problema de coordenada encontrado")
+            return df
+
+        self.on_log(f"⚠ {len(problemas)} problemas encontrados — abrindo mapa")
+
+        # ─────────────────────────────
+        # MAPA
+        # ─────────────────────────────
+        corrigidos = abrir_mapa_validacao(problemas)
+
+        if corrigidos is None:
+            raise RuntimeError("Validação cancelada pelo usuário")
+
+        # ─────────────────────────────
+        # APLICA CORREÇÕES
+        # ─────────────────────────────
+        for p in corrigidos:
+            idx = p["linha"] - 2
+            campo = p["campo"]
+            lat = p["lat"]
+            lon = p["lon"]
+
+            if lat is None or lon is None:
+                continue
+
+            df.at[idx, campo] = f"{lat}, {lon}"
+
+        self.on_log("✔ Coordenadas corrigidas e confirmadas")
+        return df

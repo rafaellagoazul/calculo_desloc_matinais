@@ -1,0 +1,20 @@
+# REMOVIDO: from tools.backup.backup_manager_ui import mount_backup_ui
+# REMOVIDO: from tools.runner.main_runner_tool import mount_main_runner
+# REMOVIDO: from tools.code_fixer import mount_code_fixer_tool
+
+TOOLS = [
+      {
+        "name": "▶ Executar Sistema",
+        "mount": mount_main_runner
+    },
+    {
+        "name": "💾 Backup Manager",
+        "mount": mount_backup_ui
+    },
+    {
+        "name": "🛠 Code Fixer",
+        "group": "Manutenção",
+        "mount": mount_code_fixer_tool,
+    },
+    
+]

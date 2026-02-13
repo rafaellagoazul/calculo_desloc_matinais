@@ -1,0 +1,38 @@
+class StatusController:
+    def __init__(self, status_bar, logo):
+        self.status_bar = status_bar
+        self.logo = logo
+
+    def iniciando(self):
+        self.status_bar.set_status("⏳ Iniciando...")
+        self.status_bar.reset_progress()
+        self.status_bar.glow.stop()
+        self.logo.pulse()
+
+    def processando(self):
+        self.status_bar.set_status("⚙ Processando...")
+        self.status_bar.glow.start()
+        self.logo.rotate(fast=True)
+
+    def progresso(self, atual, total):
+        if total > 0:
+            self.status_bar.set_progress(atual / total)
+
+    def sucesso(self):
+        self.status_bar.set_status("✅ Concluído")
+        self.status_bar.set_progress(1)
+        self.status_bar.glow.stop()
+        self.logo.stop()
+        self.logo.pulse()
+
+    def cancelado(self):
+        self.status_bar.set_status("⛔ Cancelado")
+        self.status_bar.glow.stop()
+        self.logo.stop()
+        self.logo.pulse()
+
+    def erro(self):
+        self.status_bar.set_status("❌ Erro")
+        self.status_bar.glow.stop()
+        self.logo.stop()
+        self.logo.pulse()

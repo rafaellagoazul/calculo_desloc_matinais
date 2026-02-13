@@ -1,0 +1,153 @@
+
+from ui.modal_base import ModalBase
+from ui.stores.config_store import salvar_config
+from ui.componentes.alert_modal import AlertModal
+from ui.theme import TEMAS
+
+
+import customtkinter as ctk
+class ConfigWindow(ModalBase):
+
+    def __init__(self, parent, cfg: dict):
+        super().__init__(parent, titulo="Parâmetros", width=520, height=420)
+
+        self.cfg = cfg
+        self.container.grid_columnconfigure(1, weight=1)
+
+        # ──────────────────────────────
+        # API KEY
+        # ──────────────────────────────
+        ctk.CTkLabel(
+            self.container,
+            text="API Key (OpenRouteService)"
+        ).grid(row=0, column=0, sticky="w", padx=8, pady=(8, 2))
+
+        self.ent_api = ctk.CTkEntry(self.container)
+        self.ent_api.grid(row=0, column=1, sticky="ew", padx=8, pady=(8, 2))
+
+        # ──────────────────────────────
+        # Tentativas extras
+        # ──────────────────────────────
+        ctk.CTkLabel(
+            self.container,
+            text="Tentativas extras"
+        ).grid(row=1, column=0, sticky="w", padx=8, pady=2)
+
+        self.ent_tentativas = ctk.CTkEntry(self.container, width=100)
+        self.ent_tentativas.grid(row=1, column=1, sticky="w", padx=8, pady=2)
+
+        # ──────────────────────────────
+        # Tempo de espera
+        # ──────────────────────────────
+        ctk.CTkLabel(
+            self.container,
+            text="Tempo de espera (s)"
+        ).grid(row=2, column=0, sticky="w", padx=8, pady=2)
+
+        self.ent_tempo = ctk.CTkEntry(self.container, width=100)
+        self.ent_tempo.grid(row=2, column=1, sticky="w", padx=8, pady=2)
+
+        # ──────────────────────────────
+        # Percentual adicional
+        # ──────────────────────────────
+        ctk.CTkLabel(
+            self.container,
+            text="Percentual adicional (%)"
+        ).grid(row=3, column=0, sticky="w", padx=8, pady=2)
+
+        self.ent_percentual = ctk.CTkEntry(self.container, width=100)
+        self.ent_percentual.grid(row=3, column=1, sticky="w", padx=8, pady=2)
+
+        # Dica visual
+        ctk.CTkLabel(
+            self.container,
+            text="Ex: 0,25  |  1,5  |  2",
+            text_color="#888",
+            font=ctk.CTkFont(size=11)
+        ).grid(row=4, column=1, sticky="w", padx=8, pady=(0, 6))
+
+        # ──────────────────────────────
+        # Tema
+        # ──────────────────────────────
+        ctk.CTkLabel(
+            self.container,
+            text="Tema"
+        ).grid(row=5, column=0, sticky="w", padx=8, pady=(10, 2))
+
+        self.combo_tema = ctk.CTkOptionMenu(
+            self.container,
+            values=list(TEMAS.keys())
+        )
+        self.combo_tema.grid(row=5, column=1, sticky="w", padx=8, pady=(10, 2))
+
+        # ──────────────────────────────
+        # Botões
+        # ──────────────────────────────
+        box_btn = ctk.CTkFrame(self.container, fg_color="transparent")
+        box_btn.grid(row=6, column=0, columnspan=2, pady=(20, 6))
+
+        ctk.CTkButton(
+            box_btn,
+            text="Salvar",
+            command=self._salvar
+        ).pack(side="left", padx=6)
+
+        ctk.CTkButton(
+            box_btn,
+            text="Cancelar",
+            fg_color="#555",
+            command=self.destroy
+        ).pack(side="left", padx=6)
+
+        self._carregar_cfg()
+
+    # ──────────────────────────────
+    # Carregar valores
+    # ──────────────────────────────
+    def _carregar_cfg(self):
+        self.ent_api.insert(0, self.cfg.get("ors_api_key", ""))
+        self.ent_tentativas.insert(0, str(self.cfg.get("tentativas_extras", 2)))
+        self.ent_tempo.insert(0, str(self.cfg.get("tempo_espera", 2)))
+
+        percentual = self.cfg.get("percentual_adicional", 0)
+        percentual_str = f"{percentual * 100:.2f}".replace(".", ",")
+        self.ent_percentual.insert(0, percentual_str)
+
+        self.combo_tema.set(self.cfg.get("tema", "Escuro"))
+
+    # ──────────────────────────────
+    # Salvar
+    # ──────────────────────────────
+    def _salvar(self):
+        try:
+            self.cfg["ors_api_key"] = self.ent_api.get().strip()
+            self.cfg["tentativas_extras"] = int(self.ent_tentativas.get())
+            self.cfg["tempo_espera"] = int(self.ent_tempo.get())
+
+            # 🔥 CORREÇÃO PRINCIPAL AQUI
+            perc_raw = self.ent_percentual.get().strip().replace(",", ".")
+            percentual = float(perc_raw)
+
+            if percentual < 0:
+                raise ValueError("Percentual não pode ser negativo")
+
+            self.cfg["percentual_adicional"] = percentual / 100
+            self.cfg["tema"] = self.combo_tema.get()
+
+        except ValueError:
+            AlertModal(
+                self,
+                "Percentual inválido.\n\n"
+                "Use valores como:\n"
+                "0,25  |  1,5  |  2"
+            )
+            return
+
+        salvar_config(self.cfg)
+        AlertModal(
+            self,
+            "Sucesso",
+            "Parâmetros salvos com sucesso.",
+            tipo="sucess"
+            )
+        self.destroy()

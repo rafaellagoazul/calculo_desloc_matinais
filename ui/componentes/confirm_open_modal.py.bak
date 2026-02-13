@@ -1,0 +1,36 @@
+import os
+import customtkinter as ctk
+from ui.modal_base import ModalBase
+
+
+class ConfirmOpenModal(ModalBase):
+    def __init__(self, parent, arquivo):
+        super().__init__(parent, titulo="Modelo criado", width=420, height=180)
+        self.arquivo = arquivo
+
+        label = ctk.CTkLabel(
+            self.container,
+            text="Modelo criado com sucesso.\n\nDeseja abrir o arquivo agora?",
+            justify="center"
+        )
+        label.pack(pady=20)
+
+        botoes = ctk.CTkFrame(self.container)
+        botoes.pack(pady=10)
+
+        ctk.CTkButton(
+            botoes,
+            text="Abrir",
+            command=self._abrir
+        ).pack(side="left", padx=10)
+
+        ctk.CTkButton(
+            botoes,
+            text="Fechar",
+            fg_color="#555",
+            command=self.destroy
+        ).pack(side="left", padx=10)
+
+    def _abrir(self):
+        os.startfile(self.arquivo)  # Windows
+        self.destroy()

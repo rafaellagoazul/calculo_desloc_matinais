@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-01-20T16:38:52.030335",
+  "project_root": "E:\\Projetos\\calculo_desloc_matinais",
+  "backup": "E:\\Projetos\\calculo_desloc_matinais\\_backup\\backup_20260120_163822",
+  "apply": false,
+  "notes": [
+    "ACTIVE = mantido no projeto",
+    "SUSPECT = movido para quarentena",
+    "LEGACY = já isolado anteriormente"
+  ]
+}

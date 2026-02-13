@@ -1,0 +1,34 @@
+from pathlib import Path
+import customtkinter as ctk
+# ui/layout/file_selector.py
+from tkinter import filedialog
+
+
+class FileSelector(ctk.CTkFrame):
+    def __init__(self, master, on_select):
+        super().__init__(master)
+        self.pack(fill="x", pady=(0, 8))
+
+        self._on_select = on_select
+
+        self.label = ctk.CTkLabel(
+            self,
+            text="Nenhum arquivo selecionado",
+            anchor="w"
+        )
+        self.label.pack(side="left", fill="x", expand=True, padx=8)
+
+        ctk.CTkButton(
+            self,
+            text="Selecionar Excel",
+            command=self._selecionar
+        ).pack(side="right", padx=6)
+
+    def _selecionar(self):
+        arq = filedialog.askopenfilename(
+            filetypes=[("Excel", "*.xlsx")]
+        )
+        if arq:
+            path = Path(arq)
+            self.label.configure(text=path.name)
+            self._on_select(path)

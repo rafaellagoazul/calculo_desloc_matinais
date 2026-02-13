@@ -1,0 +1,161 @@
+# ui/app.py
+import threading
+import customtkinter as ctk
+from pathlib import Path
+
+from ui.windows.config_window import ConfigWindow
+from ui.windows.history_window import HistoryWindow
+from ui.windows.preview_window import PreviewWindow
+from ui.componentes.alert_modal import AlertModal
+from ui.stores.config_store import carregar_config
+from ui.theme import aplicar_tema
+
+from ui.controller import AppController
+from ui.layout.header import Header
+from ui.layout.footer import Footer
+from ui.layout.file_selector import FileSelector
+from ui.layout.status_bar import StatusBar
+from ui.layout.actions_bar import ActionsBar
+from ui.services.log_service import LogService
+from ui.controllers.status_controller import StatusController
+from ui.services.thread_service import ThreadService
+from ui.layout.log_panel import LogPanel
+
+from ui.stores.config_store import carregar_config
+from ui.stores.history_store import inicializar_db
+from ui.theme import aplicar_tema
+
+
+class App(ctk.CTk):
+    def __init__(self):
+        super().__init__()
+
+        self.title("PrimeiroKM - Manra Sistemas")
+        self.geometry("980x680")
+        self.after(200, lambda: self.state("zoomed"))
+
+        self.cfg = carregar_config()
+        aplicar_tema(self.cfg.get("tema", "escuro"))
+
+        self.cancel_event = threading.Event()
+        self.arquivo_excel: Path | None = None
+        self.modo_manutencao = False
+        inicializar_db()
+
+        root = ctk.CTkFrame(self)
+        root.pack(fill="both", expand=True, padx=12, pady=12)
+
+        bg = self._apply_appearance_mode(self.cget("fg_color"))
+
+        self.header = Header(root, bg)
+        self.footer = Footer(root)
+        self.file_selector = FileSelector(root, self._arquivo_selecionado)
+        self.status_bar = StatusBar(root)
+        self.status_controller = StatusController(
+            status_bar=self.status_bar,
+            logo=self.header.logo
+        )
+        
+        self.actions = ActionsBar(root, {
+            "processar": self._processar,
+            "cancelar": self._cancelar,
+            "parametros": self._abrir_parametros,
+            "historico": self._abrir_historico,
+            "preview": self._abrir_preview,
+            "manutencao": self._abrir_manutencao,
+            "modelo": self._baixar_modelo,
+            "sobre": self._abrir_sobre,
+        })
+
+        self.log_panel = LogPanel(root)
+        self.logger = LogService(self)
+        self.thread_service = ThreadService(self)
+        self.log_box = self.log_panel.log_box
+        self.debug_box = self.log_panel.debug_box
+
+        self.controller = AppController(self)
+
+    # ───────────────────────── CALLBACKS ─────────────────────────
+
+    def _arquivo_selecionado(self, path: Path):
+        self.arquivo_excel = path
+        self.log(f"📂 Arquivo selecionado: {path.name}")
+
+    def _processar(self):
+        self.controller.iniciar_processamento(True)
+
+    def _cancelar(self):
+        self.cancel_event.set()
+
+    def estado_iniciando(self):
+        self.status_controller.iniciando()
+
+    def estado_processando(self):
+        self.status_controller.processando()
+
+    def estado_sucesso(self):
+        self.status_controller.sucesso()
+
+    def estado_cancelado(self):
+        self.status_controller.cancelado()
+
+    def estado_erro(self):
+        self.status_controller.erro()
+
+    def progresso_percentual(self, atual, total):
+        self.status_controller.progresso(atual, total)
+
+    def _abrir_parametros(self):
+        win = ConfigWindow(self, self.cfg)
+        self.wait_window(win)
+        self.cfg = carregar_config()
+        aplicar_tema(self.cfg.get("tema", "escuro"))
+
+    def _abrir_historico(self):
+        HistoryWindow(self)
+
+    def _abrir_preview(self):
+        if not self.arquivo_excel:
+            AlertModal(
+                self,
+                "Aviso",
+                "Nenhum arquivo selecionado.",
+                "warning"
+            )
+            return
+        PreviewWindow(self, self.arquivo_excel)
+
+    # ───────────────────────── LOG API ─────────────────────────
+
+    def log(self, msg: str):
+        if self.logger:
+            self.logger.info(msg)
+
+    def debug(self, msg: str):
+        if self.logger:
+            self.logger.debug(msg)
+
+    def reportar_erro(self, exc: Exception, contexto: str | None = None):
+        if self.logger:
+            self.logger.error(str(exc), contexto)
+
+    def _abrir_manutencao(self):
+        AlertModal(
+            self,
+            "Manutenção",
+            "Módulo de manutenção ainda não disponível.",
+            "info"
+        )
+
+    def _abrir_sobre(self):
+        AlertModal(
+            self,
+            titulo="Sobre",
+            mensagem="Primeiro KM" 
+            "\n \nCalculador de Deslocamentos - Versão 2.1.3"
+            "\n \nCopyright © 2025-2026 - Manra Sistemas"
+        )
+
+    def _baixar_modelo(self):
+        from ui.services.modelo_excel_service import baixar_modelo_excel
+        baixar_modelo_excel(self)  # 👈 AGORA SIM

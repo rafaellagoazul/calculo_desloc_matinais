@@ -1,0 +1,57 @@
+# Python cache/bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Tool/cache folders
+.cache_ors/
+.pytest_cache/
+.mypy_cache/
+.pyright/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Runtime logs and local state
+logs/
+*.log
+.project_explorer_state.json
+.project_freeze.json
+tools/.project_freeze.json
+.analyzer_history.json
+sanitize_report.json
+
+# Databases and local data artifacts
+*.db
+*.sqlite
+*.sqlite3
+
+# Backup/temp artifacts
+*.bak
+*.fixed
+*.tmp
+
+# Coverage/test artifacts
+.coverage
+htmlcov/
+
+# Local secrets
+ors_api_key.txt
+.env
+.env.*
+
+# User test data (large local files)
+zz arquivos para testes/
+
+# Backup zips and generated datasets
+*.zip
+*_RESULTADO.xlsx
+*_resultados.xlsx

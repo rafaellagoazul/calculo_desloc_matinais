@@ -1,0 +1,150 @@
+# REMOVIDO: from pathlib import Path
+"""
+SANITIZE.PY
+============
+Script único de saneamento do projeto.
+
+✔ Backup completo
+✔ Diagnóstico estrutural
+✔ Classificação (ACTIVE / SUSPECT)
+✔ Quarentena automática
+✔ Relatório final
+✔ Auto-destruição opcional
+
+Uso:
+-----
+python scripts/sanitize.py
+python scripts/sanitize.py --apply
+python scripts/sanitize.py --apply --self-destruct
+"""
+
+
+# REMOVIDO: import argparse
+# REMOVIDO: import json
+# REMOVIDO: import shutil
+# REMOVIDO: import sys
+# REMOVIDO: from datetime import datetime
+
+# ─────────────────────────────────────────────────────────────
+# CONFIG
+# ─────────────────────────────────────────────────────────────
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+BACKUP_DIR = PROJECT_ROOT / "_backup"
+QUARANTINE_DIR = PROJECT_ROOT / "quarentena"
+REPORT_FILE = PROJECT_ROOT / "sanitize_report.json"
+
+# admin tools
+# REMOVIDO: from admin.tools.diagnostic_tool import run as diagnostic_run
+# REMOVIDO: from admin.tools.quarantine_tool import run as quarantine_run
+
+
+# ─────────────────────────────────────────────────────────────
+# UTIL
+# ─────────────────────────────────────────────────────────────
+
+def log(msg: str):
+    print(f"[SANITIZE] {msg}")
+
+
+def timestamp() -> str:
+    return datetime.now().strftime("%Y%m%d_%H%M%S")
+
+
+# ─────────────────────────────────────────────────────────────
+# BACKUP
+# ─────────────────────────────────────────────────────────────
+
+def backup_project() -> Path:
+    BACKUP_DIR.mkdir(exist_ok=True)
+    dest = BACKUP_DIR / f"backup_{timestamp()}"
+    log(f"Criando backup em: {dest}")
+    shutil.copytree(
+        PROJECT_ROOT,
+        dest,
+        ignore=shutil.ignore_patterns(
+            "_backup", "quarentena", "__pycache__", ".pytest_cache"
+        )
+    )
+    return dest
+
+
+# ─────────────────────────────────────────────────────────────
+# SANITIZE
+# ─────────────────────────────────────────────────────────────
+
+def sanitize(apply: bool):
+    log("Iniciando diagnóstico estrutural")
+    diagnostic_run(PROJECT_ROOT)
+
+    log("Executando quarentena")
+    quarantine_run(PROJECT_ROOT, dry_run=not apply)
+
+
+# ─────────────────────────────────────────────────────────────
+# REPORT
+# ─────────────────────────────────────────────────────────────
+
+def generate_report(backup_path: Path, apply: bool):
+    report = {
+        "timestamp": datetime.now().isoformat(),
+        "project_root": str(PROJECT_ROOT),
+        "backup": str(backup_path),
+        "apply": apply,
+        "notes": [
+            "ACTIVE = mantido no projeto",
+            "SUSPECT = movido para quarentena",
+            "LEGACY = já isolado anteriormente"
+        ]
+    }
+    REPORT_FILE.write_text(
+        json.dumps(report, indent=2, ensure_ascii=False),
+        encoding="utf-8"
+    )
+    log(f"Relatório gerado: {REPORT_FILE}")
+
+
+# ─────────────────────────────────────────────────────────────
+# SELF DESTRUCT
+# ─────────────────────────────────────────────────────────────
+
+def self_destruct():
+    log("Auto-destruição ativada")
+    try:
+        Path(__file__).unlink()
+        log("sanitize.py removido com sucesso")
+    except Exception as e:
+        log(f"Falha ao remover sanitize.py: {e}")
+
+
+# ─────────────────────────────────────────────────────────────
+# MAIN
+# ─────────────────────────────────────────────────────────────
+
+def main():
+    parser = argparse.ArgumentParser(description="Sanear projeto")
+    parser.add_argument("--apply", action="store_true", help="Aplicar mudanças (não dry-run)")
+    parser.add_argument("--self-destruct", action="store_true", help="Apagar o script após execução")
+
+    args = parser.parse_args()
+
+    log("======================================")
+    log(" SANITIZE PROJECT")
+    log("======================================")
+    log(f"Root: {PROJECT_ROOT}")
+    log(f"Modo: {'APLICAR' if args.apply else 'DRY-RUN'}")
+
+    backup_path = backup_project()
+    sanitize(apply=args.apply)
+    generate_report(backup_path, args.apply)
+
+    if args.self_destruct:
+        self_destruct()
+
+    log("SANITIZE FINALIZADO")
+
+
+if __name__ == "__main__":
+    main()

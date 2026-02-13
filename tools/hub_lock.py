@@ -1,0 +1,21 @@
+from pathlib import Path
+
+LOCK_FILE = Path("tools/.hub_lock")
+
+
+def acquire_lock(tool_name: str) -> bool:
+    if LOCK_FILE.exists():
+        return False
+    LOCK_FILE.write_text(tool_name, encoding="utf-8")
+    return True
+
+
+def release_lock():
+    if LOCK_FILE.exists():
+        LOCK_FILE.unlink()
+
+
+def get_lock_owner() -> str | None:
+    if LOCK_FILE.exists():
+        return LOCK_FILE.read_text(encoding="utf-8")
+    return None

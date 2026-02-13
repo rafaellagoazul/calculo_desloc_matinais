@@ -1,0 +1,14 @@
+{
+  "frozen": {
+    "run_tools.py": true,
+    "main.py": true,
+    "core\\calculador.py": true,
+    "core\\utils.py": true,
+    "core\\coord_validator.py": true,
+    "core\\persistencia_excel.py": true,
+    "core\\snapping.py": true,
+    "core\\preprocessador_coordenadas.py": true,
+    "core\\db.py": true
+  },
+  "expanded": []
+}

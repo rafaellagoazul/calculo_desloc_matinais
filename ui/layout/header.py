@@ -1,0 +1,43 @@
+import customtkinter as ctk
+# ui/layout/header.py
+from ui.componentes.logo_animator import LogoAnimator
+from ui.componentes.logo import Logo
+
+
+class Header(ctk.CTkFrame):
+    def __init__(self, master, bg_color):
+        super().__init__(master, fg_color="transparent", height=130)
+        self.pack(fill="x", pady=(0, 10))
+        self.pack_propagate(False)
+
+        container_logo = ctk.CTkFrame(
+            self, width=120, height=120, fg_color="transparent"
+        )
+        container_logo.pack(side="left", padx=10)
+        container_logo.pack_propagate(False)
+
+        self.logo = LogoAnimator(
+            container_logo,
+            image_path="resources/logo.png",
+            size=95,
+            bg=bg_color
+        )
+        self.logo.place(relx=0.5, rely=0.5, anchor="center")
+        self.logo.pulse()
+
+        ctk.CTkLabel(
+            self,
+            text="PRIMEIROKM",
+            font=("Arial", 32, "bold"),
+            text_color=("#1f538d", "#5da9e9")
+        ).pack(side="left", padx=(20, 0))
+
+        try:
+            Logo(
+                self,
+                image_path="resources/logo_empresa.png",
+                height=100,
+                bg=bg_color
+            ).pack(side="right", padx=20)
+        except Exception:
+            pass

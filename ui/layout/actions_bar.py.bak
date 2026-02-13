@@ -1,0 +1,63 @@
+import customtkinter as ctk
+
+
+class ActionsBar(ctk.CTkFrame):
+    def __init__(self, master, callbacks):
+        super().__init__(master)
+        self.pack(fill="x", pady=10)
+
+        # agora temos 5 colunas
+        self.grid_columnconfigure((0, 1, 2, 3, 4), weight=1)
+
+        L = 160
+
+        ctk.CTkButton(
+            self, text="▶ Processar", width=L,
+            command=callbacks["processar"]
+        ).grid(row=0, column=0, padx=10, pady=10)
+
+        ctk.CTkButton(
+            self, text="⛔ Cancelar", width=L,
+            fg_color="#8b2c2c",
+            command=callbacks["cancelar"]
+        ).grid(row=0, column=1, padx=10, pady=10)
+
+        ctk.CTkButton(
+            self, text="⚙ Parâmetros", width=L,
+            command=callbacks["parametros"]
+        ).grid(row=0, column=2, padx=10, pady=10)
+
+        ctk.CTkButton(
+            self, text="📚 Histórico", width=L,
+            command=callbacks["historico"]
+        ).grid(row=0, column=3, padx=10, pady=10)
+
+        ctk.CTkButton(
+            self, text="🧰 Manutenção", width=L,
+            fg_color="#444",
+            command=callbacks["manutencao"]
+        ).grid(row=0, column=4, padx=10, pady=10)
+
+        ctk.CTkButton(
+            self, text="🔍 Preview", width=L,
+            fg_color="#555",
+            command=callbacks["preview"]
+        ).grid(row=1, column=0, padx=10, pady=5)
+
+        ctk.CTkButton(
+            self,
+            text="⬇ Modelo Excel",
+            width=L,
+            fg_color="#555",
+            command=callbacks["modelo"]
+        ).grid(row=1, column=1, padx=10, pady=5)
+
+
+
+        ctk.CTkButton(
+            self, text="ℹ Sobre", width=L,
+            fg_color="#555",
+            command=callbacks["sobre"]
+        ).grid(row=1, column=2, padx=10, pady=5)
+
+

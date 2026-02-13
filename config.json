@@ -1,0 +1,11 @@
+{
+    "config_version": 2,
+    "tema": "Claro",
+    "ors_api_key": "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImFkNmQyZWVmNDE1ODQyOGQ5ZGRhMzI5MzkwODZhZTJkIiwiaCI6Im11cm11cjY0In0=",
+    "ors_valid": true,
+    "tentativas_extras": 0,
+    "percentual_adicional": 0.0025,
+    "modelo_rota": "driving-car",
+    "ors_key": "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImFkNmQyZWVmNDE1ODQyOGQ5ZGRhMzI5MzkwODZhZTJkIiwiaCI6Im11cm11cjY0In0=",
+    "tempo_espera": 5
+}

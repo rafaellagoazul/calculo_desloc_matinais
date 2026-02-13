@@ -1,0 +1,247 @@
+﻿ANALISE DO PROJETO
+Data: 01/13/2026 10:02:22
+Raiz: E:\Projetos\calculo_desloc_matinais
+===================================
+
+ESTRUTURA DE PASTAS
+.\ui
+.\core
+.\tests
+.\resources
+.\.cache_ors
+.\zz arquivos para testes
+.\logs
+.\data
+.\_old
+.\ui\controllers
+.\ui\__pycache__
+.\ui\windows
+.\ui\componentes
+.\ui\stores
+.\ui\windows\__pycache__
+.\ui\componentes\__pycache__
+.\ui\stores\__pycache__
+.\core\__pycache__
+.\tests\__pycache__
+
+ARQUIVOS PYTHON
+.\main.py
+.\teste_consolidacao.py
+.\migrar_db.py
+.\ui\theme.py
+.\ui\app.py
+.\ui\__init__.py
+.\ui\tooltip.py
+.\ui\splash.py
+.\ui\modal_base.py
+.\ui\message_modal.py
+.\ui\alerts.py
+.\ui\modelo_excel.py
+.\ui\export_success_modal.py
+.\ui\consolidacao.py
+.\ui\deslocamentos_queries.py
+.\ui\consolidacao_window.py
+.\ui\exportador_excel.py
+.\ui\db.py
+.\ui\consolidacao_mensal_window.py
+.\ui\map_preview_modal.py
+.\ui\log_mixin.py
+.\ui\progress_mixin.py
+.\ui\windows_utils.py
+.\ui\controller.py
+.\ui\controllers\configuracoes.py
+.\ui\windows\history_window.py
+.\ui\windows\config_window.py
+.\ui\windows\preview_window.py
+.\ui\componentes\logo_animator.py
+.\ui\componentes\alert_modal.py
+.\ui\componentes\confirm_open_modal.py
+.\ui\componentes\logo.py
+.\ui\stores\history_store.py
+.\ui\stores\config_store.py
+.\ui\stores\deslocamentos_store.py
+.\core\calculador.py
+.\core\__init__.py
+.\core\simulador.py
+.\core\ors_client.py
+.\core\cache.py
+.\core\geocoder.py
+.\core\utils.py
+.\core\coord_validator.py
+.\core\error_summary.py
+.\core\validacao_coords.py
+.\core\persistencia_excel.py
+.\core\snapping.py
+.\core\fluxo_validacao.py
+.\core\geo_stats.py
+.\core\heatmap_data.py
+.\core\auditoria_log.py
+.\tests\test_core_basico.py
+.\tests\test_core_retry.py
+.\tests\test_core_cancelamento.py
+.\tests\__init__.py
+.\tests\test_coord_validator.py
+.\_old\processador.py
+.\_old\calculador copy 2.py
+.\_old\calculador copy.py
+
+IMPORTS INTERNOS
+
+Arquivo: .\main.py
+from ui.app import App
+
+Arquivo: .\teste_consolidacao.py
+from ui.consolidacao import consolidar_arquivos
+
+Arquivo: .\ui\app.py
+from ui.controller import AppController
+from ui.log_mixin import LogMixin
+from ui.windows.history_window import HistoryWindow
+from ui.windows.config_window import ConfigWindow
+from ui.windows.preview_window import PreviewWindow
+from ui.componentes.alert_modal import AlertModal
+from ui.componentes.logo import Logo
+from ui.componentes.logo_animator import LogoAnimator
+from ui.stores.config_store import carregar_config
+from ui.stores.history_store import inicializar_db
+from ui.theme import aplicar_tema
+
+Arquivo: .\ui\message_modal.py
+from ui.modal_base import ModalBase
+
+Arquivo: .\ui\alerts.py
+from ui.componentes.alert_modal import AlertModal
+
+Arquivo: .\ui\export_success_modal.py
+from ui.modal_base import ModalBase
+
+Arquivo: .\ui\consolidacao_window.py
+from ui.modal_base import ModalBase
+from ui.deslocamentos_queries import (
+
+Arquivo: .\ui\consolidacao_mensal_window.py
+from ui.modal_base import ModalBase
+from ui.deslocamentos_queries import resumo_por_periodo
+
+Arquivo: .\ui\controller.py
+from core.calculador import CalculadorDeslocamentos
+from core.persistencia_excel import aplicar_correcoes_excel
+from ui.map_preview_modal import abrir_mapa_validacao
+from ui.componentes.alert_modal import AlertModal
+from ui.stores.deslocamentos_store import inserir_registros
+from ui.stores.history_store import registrar_execucao
+
+Arquivo: .\ui\controllers\configuracoes.py
+from ui.config_store import carregar_config, salvar_config
+
+Arquivo: .\ui\windows\history_window.py
+from ui.modal_base import ModalBase
+from ui.export_success_modal import ExportSuccessModal
+from ui.componentes.alert_modal import AlertModal
+from ui.stores.history_store import listar_execucoes
+from ui.deslocamentos_queries import (
+
+Arquivo: .\ui\windows\config_window.py
+from ui.modal_base import ModalBase
+from ui.stores.config_store import salvar_config
+from ui.alerts import alert_error, alert_success
+from ui.theme import TEMAS
+
+Arquivo: .\ui\windows\preview_window.py
+from ui.modal_base import ModalBase
+from ui.componentes.alert_modal import AlertModal
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\ui\componentes\alert_modal.py
+from ui.modal_base import ModalBase
+
+Arquivo: .\ui\componentes\confirm_open_modal.py
+from ui.modal_base import ModalBase
+
+Arquivo: .\ui\stores\history_store.py
+from ui.db import DB_PATH
+
+Arquivo: .\core\fluxo_validacao.py
+from core.snapping import snap_lote
+
+Arquivo: .\tests\test_core_basico.py
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\tests\test_core_retry.py
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\tests\test_core_cancelamento.py
+from core.calculador import CalculadorDeslocamentos
+
+Arquivo: .\tests\test_coord_validator.py
+from core.coord_validator import validar_coordenada
+
+Arquivo: .\_old\processador.py
+from core.calculador import CalculadorDeslocamentos
+from ui.deslocamentos_store import inserir_registros
+from ui.history_store import registrar_execucao
+from ui.exportador_excel import exportar_excel
+from core.utils import gerar_hash_registro
+
+POSSIVEIS ARQUIVOS NAO UTILIZADOS
+.\main.py
+.\teste_consolidacao.py
+.\migrar_db.py
+.\ui\theme.py
+.\ui\app.py
+.\ui\__init__.py
+.\ui\tooltip.py
+.\ui\splash.py
+.\ui\modal_base.py
+.\ui\message_modal.py
+.\ui\alerts.py
+.\ui\modelo_excel.py
+.\ui\export_success_modal.py
+.\ui\consolidacao.py
+.\ui\deslocamentos_queries.py
+.\ui\consolidacao_window.py
+.\ui\exportador_excel.py
+.\ui\db.py
+.\ui\consolidacao_mensal_window.py
+.\ui\map_preview_modal.py
+.\ui\log_mixin.py
+.\ui\progress_mixin.py
+.\ui\windows_utils.py
+.\ui\controller.py
+.\ui\controllers\configuracoes.py
+.\ui\windows\history_window.py
+.\ui\windows\config_window.py
+.\ui\windows\preview_window.py
+.\ui\componentes\logo_animator.py
+.\ui\componentes\alert_modal.py
+.\ui\componentes\confirm_open_modal.py
+.\ui\componentes\logo.py
+.\ui\stores\history_store.py
+.\ui\stores\config_store.py
+.\ui\stores\deslocamentos_store.py
+.\core\calculador.py
+.\core\__init__.py
+.\core\simulador.py
+.\core\ors_client.py
+.\core\cache.py
+.\core\geocoder.py
+.\core\utils.py
+.\core\coord_validator.py
+.\core\error_summary.py
+.\core\validacao_coords.py
+.\core\persistencia_excel.py
+.\core\snapping.py
+.\core\fluxo_validacao.py
+.\core\geo_stats.py
+.\core\heatmap_data.py
+.\core\auditoria_log.py
+.\tests\test_core_basico.py
+.\tests\test_core_retry.py
+.\tests\test_core_cancelamento.py
+.\tests\__init__.py
+.\tests\test_coord_validator.py
+.\_old\processador.py
+.\_old\calculador copy 2.py
+.\_old\calculador copy.py
+
+Analise concluida

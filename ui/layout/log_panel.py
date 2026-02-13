@@ -1,0 +1,16 @@
+
+
+import customtkinter as ctk
+class LogPanel(ctk.CTkFrame):
+    def __init__(self, master):
+        super().__init__(master)
+
+        self.pack(fill="both", expand=True, pady=(8, 0))
+
+        self.log_box = ctk.CTkTextbox(self, height=160)
+        self.log_box.pack(fill="both", expand=True, pady=(0, 6))
+        self.log_box.configure(state="disabled")
+
+        self.debug_box = ctk.CTkTextbox(self, height=140)
+        self.debug_box.pack(fill="both", expand=True)
+        self.debug_box.configure(state="disabled")

@@ -1,0 +1,9 @@
+from pathlib import Path
+import sqlite3
+
+# 🔒 CAMINHO ABSOLUTO — NÃO ALTERAR
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+DB_PATH = PROJECT_ROOT / "data" / "deslocamentos.db"
+
+def get_conn():
+    return sqlite3.connect(DB_PATH)
