@@ -55,3 +55,4 @@ zz arquivos para testes/
 *.zip
 *_RESULTADO.xlsx
 *_resultados.xlsx
+data/backups/*.zip
